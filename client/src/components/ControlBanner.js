@@ -105,8 +105,8 @@ export default function AppBanner() {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            <Link style={{ textDecoration: "none", color: "pink" }} to="/">
-              Playlister
+            <Link style={{ textDecoration: "none", color: "black" }} to="/">
+              ⌂
             </Link>
           </Typography>
           <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>

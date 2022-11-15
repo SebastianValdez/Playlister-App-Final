@@ -55,6 +55,9 @@ body {
   border-radius: 10px;
 }
 
+/* ! ##################################### */
+/* ! THIS IS THE CSS FOR THE SPLASH SCREEN */
+
 #splash-screen {
   background-image: linear-gradient(to bottom, #084eb8, #1bbe96);
   color: white;
@@ -67,7 +70,25 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-flow: column;
 }
+
+#splash-screen-welcome-text, #splash-screen-user-credit-text {
+  font-size: 1vw;
+  max-width: 50vw;
+}
+
+#splash-screen-buttons {
+  width: 30vw;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ! THEN END FOR THE SPLASH SCREEN CSS */
+/* ! ##################################### */
 
 #edit-toolbar {
   background-color: transparent;
