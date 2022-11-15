@@ -13,120 +13,99 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 
-export default function AppBanner() {
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import { height } from "@mui/system";
+
+export default function ControlBanner() {
   const { auth } = useContext(AuthContext);
   const { store } = useContext(GlobalStoreContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogout = () => {
-    handleMenuClose();
-    store.closeCurrentList();
-    auth.logoutUser();
-  };
-
-  const menuId = "primary-search-account-menu";
-  const loggedOutMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>
-        <Link to="/login/">Login</Link>
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
-        <Link to="/register/">Create New Account</Link>
-      </MenuItem>
-    </Menu>
-  );
-  const loggedInMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleLogout}>Logout</MenuItem>
-    </Menu>
-  );
-
-  let editToolbar = "";
-  let menu = loggedOutMenu;
-  if (auth.loggedIn) {
-    menu = loggedInMenu;
-    if (store.currentList) {
-      editToolbar = <EditToolbar />;
-    }
-  }
-
-  function getAccountMenu(loggedIn) {
-    let userInitials = auth.getUserInitials();
-    console.log("userInitials: " + userInitials);
-    if (loggedIn) return <div>{userInitials}</div>;
-    else return <AccountCircle />;
-  }
-
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography
-            variant="h4"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+      <AppBar position="static" style={{ backgroundColor: "black" }}>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          {/* // ! Box that holds the three buttons for navigation */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "130px",
+            }}
           >
-            <Link style={{ textDecoration: "none", color: "black" }} to="/">
-              ⌂
-            </Link>
-          </Typography>
-          <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-              style={{ textDecoration: "none", color: "black" }}
+            {/* // ! HOME BUTTON */}
+            <Typography
+              variant="h4"
+              noWrap
+              component="div"
+              sx={{ display: { xs: "none", sm: "block" } }}
             >
-              {getAccountMenu(auth.loggedIn)}
-            </IconButton>
+              <HomeOutlinedIcon sx={{ fontSize: 40 }}></HomeOutlinedIcon>
+            </Typography>
+
+            {/* // ! USER LISTS */}
+            <Typography
+              variant="h5"
+              noWrap
+              component="div"
+              sx={{ display: { xs: "none", sm: "block" } }}
+            >
+              <Link style={{ textDecoration: "none", color: "white" }} to="/">
+                <PersonOutlineOutlinedIcon
+                  sx={{ fontSize: 40 }}
+                ></PersonOutlineOutlinedIcon>
+              </Link>
+            </Typography>
+
+            {/* // ! ALL LISTS */}
+            <Typography
+              variant="h5"
+              noWrap
+              component="div"
+              sx={{ display: { xs: "none", sm: "block" } }}
+            >
+              <Link style={{ textDecoration: "none", color: "white" }} to="/">
+                <GroupOutlinedIcon sx={{ fontSize: 40 }}></GroupOutlinedIcon>
+              </Link>
+            </Typography>
+          </Box>
+
+          {/* // ! SEARCH BAR */}
+          <TextField
+            id="filled-basic"
+            label="Filled"
+            variant="filled"
+            style={{ backgroundColor: "white" }}
+            sx={{ width: "700px" }}
+          />
+
+          {/* // ! SORT MENU */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              variant="h3"
+              noWrap
+              component="div"
+              sx={{ display: { xs: "none", sm: "block" } }}
+            >
+              <MenuOutlinedIcon sx={{ fontSize: 40 }}></MenuOutlinedIcon>
+            </Typography>
           </Box>
         </Toolbar>
       </AppBar>
-      {menu}
+      {}
     </Box>
   );
 }

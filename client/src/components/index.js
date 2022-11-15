@@ -1,4 +1,5 @@
 import AppBanner from "./AppBanner";
+import ControlBanner from "./ControlBanner";
 import EditToolbar from "./EditToolbar";
 import HomeScreen from "./HomeScreen";
 import HomeWrapper from "./HomeWrapper";
@@ -21,6 +22,7 @@ import MUILoginAlertModal from "./MUILoginAlertModal";
 */
 export {
   AppBanner,
+  ControlBanner,
   EditToolbar,
   HomeScreen,
   HomeWrapper,

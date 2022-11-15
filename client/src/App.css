@@ -188,7 +188,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  background-image: linear-gradient(to bottom, #084eb8, #1bbe96);
+  background-image: transparent; /* ! This is temp */
   padding-top: 1%;
 }
 
