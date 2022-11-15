@@ -114,6 +114,7 @@ function AuthContextProvider(props) {
   };
 
   auth.registerUser = async function (
+    username,
     firstName,
     lastName,
     email,
@@ -122,6 +123,7 @@ function AuthContextProvider(props) {
   ) {
     try {
       const response = await api.registerUser(
+        username,
         firstName,
         lastName,
         email,

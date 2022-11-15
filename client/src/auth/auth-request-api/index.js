@@ -32,6 +32,7 @@ export const loginUser = (email, password) => {
 };
 export const logoutUser = () => api.get(`/logout/`);
 export const registerUser = (
+  username,
   firstName,
   lastName,
   email,
@@ -39,6 +40,7 @@ export const registerUser = (
   passwordVerify
 ) => {
   return api.post(`/register/`, {
+    username: username,
     firstName: firstName,
     lastName: lastName,
     email: email,
