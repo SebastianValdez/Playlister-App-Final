@@ -6,19 +6,33 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import FastForwardIcon from "@mui/icons-material/FastForward";
 import FastRewindIcon from "@mui/icons-material/FastRewind";
+import { borderRadius } from "@mui/system";
 
 export default function VideoPlayer() {
   return (
-    <div>
+    <div id="video-player-container">
       <div id="video-player"></div>
       <div id="now-playing">Now Playing</div>
-      <div id="youtube-song-info">Playlist: Song: Title: Artist:</div>
-      <Box>
-        <PlayArrowIcon sx={{ fontSize: 40 }}></PlayArrowIcon>
-        <StopIcon sx={{ fontSize: 40 }}></StopIcon>
-        <FastForwardIcon sx={{ fontSize: 40 }}></FastForwardIcon>
-        <FastRewindIcon sx={{ fontSize: 40 }}></FastRewindIcon>
-      </Box>
+      <div id="youtube-song-info">
+        <span>Playlist:</span>
+        <span>Song:</span>
+        <span>Title:</span>
+        <span>Artist:</span>
+      </div>
+      <div id="video-controls">
+        <Box
+          sx={{
+            width: "40%",
+            display: "flex",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <FastRewindIcon sx={{ fontSize: 50 }}></FastRewindIcon>
+          <StopIcon sx={{ fontSize: 50 }}></StopIcon>
+          <PlayArrowIcon sx={{ fontSize: 50 }}></PlayArrowIcon>
+          <FastForwardIcon sx={{ fontSize: 50 }}></FastForwardIcon>
+        </Box>
+      </div>
     </div>
   );
 }

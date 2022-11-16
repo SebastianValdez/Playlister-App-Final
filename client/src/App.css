@@ -151,7 +151,6 @@ body {
   left: 0%;
   top: 0%;
   width: 100%;
-  height: 10%;
   text-align: center;
   font-size: 24pt;
   font-weight: bold;
@@ -159,7 +158,6 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 1;
-  background-image: linear-gradient(to bottom, #084eb8, #1bbe96);
 }
 
 .modal-textfield {
@@ -181,19 +179,19 @@ body {
 
 #list-selector-list {
   top: 10%;
-  width: 50%;
-  height: 1000%;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   overflow: scroll;
+  overflow-x: hidden;
   background-image: transparent; /* ! This is temp */
 }
 
 #playlist-selector {
-  top: 30%;
-  bottom: 10%;
-  height: 8.03%;
-  position: static;
+  height: 80.3%;
+  width: 100%;
+  position: absolute;
   display: flex;
   flex-direction: row;
 }
@@ -201,17 +199,17 @@ body {
 /* ! THE YOUTUBE AND COMMENT STUFF */
 /* ! ##################################### */
 
-#video-player {
-  height: 450px;
-  width: 100%;
-  background-color: #111111;
-}
-
 #youtube-comment-component {
   margin: 0.5%;
   left: 50%;
-  width: 40%;
-  height: 100%;
+  width: 80%;
+  height: 98%;
+}
+
+#video-player-container {
+  background-color: beige;
+  border-radius: 2px;
+  height: 95%;
 }
 
 #video-comments-buttons {
@@ -221,6 +219,42 @@ body {
 }
 
 /* ! THE YOUTUBE AND COMMENT STUFF */
+/* ! ##################################### */
+
+/* ! THE VIDEO PLAYER COMPONENT */
+/* ! ##################################### */
+
+#video-player {
+  height: 350px;
+  width: 100%;
+  background-color: #111111;
+}
+
+#now-playing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+#youtube-song-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+#video-controls {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 40px;
+}
+
+/* ! THE VIDEO PLAYER COMPONENT */
 /* ! ##################################### */
 
 .list-card,
