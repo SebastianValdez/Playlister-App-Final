@@ -35,7 +35,7 @@ const HomeScreen = () => {
         {listCard}
         <MUIDeleteModal />
       </div>
-      <div id="youtube-component">HANO</div>
+      <div id="youtube-component">THIS IS A YOUTUBE THING</div>
     </div>
   );
 };

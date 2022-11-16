@@ -180,16 +180,26 @@ body {
 }
 
 #list-selector-list {
-  position: absolute;
-  left: 0%;
   top: 10%;
-  width: 100%;
-  height: 90%;
+  width: 50%;
+  height: 1000%;
   display: flex;
   flex-direction: column;
   overflow: scroll;
   background-image: transparent; /* ! This is temp */
-  padding-top: 1%;
+}
+
+#youtube-component {
+  left: 50%;
+}
+
+#playlist-selector {
+  top: 30%;
+  bottom: 10%;
+  height: 8.03%;
+  position: static;
+  display: flex;
+  flex-direction: row;
 }
 
 .list-card,
