@@ -189,10 +189,6 @@ body {
   background-image: transparent; /* ! This is temp */
 }
 
-#youtube-component {
-  left: 50%;
-}
-
 #playlist-selector {
   top: 30%;
   bottom: 10%;
@@ -201,6 +197,31 @@ body {
   display: flex;
   flex-direction: row;
 }
+
+/* ! THE YOUTUBE AND COMMENT STUFF */
+/* ! ##################################### */
+
+#video-player {
+  height: 450px;
+  width: 100%;
+  background-color: #111111;
+}
+
+#youtube-comment-component {
+  margin: 0.5%;
+  left: 50%;
+  width: 40%;
+  height: 100%;
+}
+
+#video-comments-buttons {
+  display: flex;
+  width: 100%;
+  
+}
+
+/* ! THE YOUTUBE AND COMMENT STUFF */
+/* ! ##################################### */
 
 .list-card,
 .selected-list-card,

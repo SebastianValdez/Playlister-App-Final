@@ -2,11 +2,13 @@ import React, { useContext, useEffect } from "react";
 import { GlobalStoreContext } from "../store";
 import ListCard from "./ListCard.js";
 import MUIDeleteModal from "./MUIDeleteModal";
+import VideoPlayer from "./VideoPlayer";
 
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -35,7 +37,21 @@ const HomeScreen = () => {
         {listCard}
         <MUIDeleteModal />
       </div>
-      <div id="youtube-component">THIS IS A YOUTUBE THING</div>
+      <div id="youtube-comment-component">
+        <div id="video-comments-buttons">
+          <Button variant="contained" style={{ backgroundColor: "black" }}>
+            Player
+          </Button>
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "black" }}
+            sx={{ ml: "3px" }}
+          >
+            Comments
+          </Button>
+        </div>
+        <VideoPlayer />
+      </div>
     </div>
   );
 };
