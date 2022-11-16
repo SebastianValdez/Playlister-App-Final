@@ -19,9 +19,6 @@ const HomeScreen = () => {
     store.loadIdNamePairs();
   }, []);
 
-  function handleCreateNewList() {
-    store.createNewList();
-  }
   let listCard = "";
   if (store) {
     listCard = (
@@ -34,21 +31,11 @@ const HomeScreen = () => {
   }
   return (
     <div id="playlist-selector">
-      {/* <div id="list-selector-heading">
-        <Fab
-          color="primary"
-          aria-label="add"
-          id="add-list-button"
-          onClick={handleCreateNewList}
-        >
-          <AddIcon />
-        </Fab>
-        <Typography variant="h2">Your Lists</Typography>
-      </div> */}
       <div id="list-selector-list">
         {listCard}
         <MUIDeleteModal />
       </div>
+      <div id="youtube-component">HANO</div>
     </div>
   );
 };

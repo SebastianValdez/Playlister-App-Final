@@ -12,7 +12,7 @@ function Statusbar() {
   let text = "";
   if (store.currentList) text = store.currentList.name;
 
-  if (store.currentList) {
+  if (true) {
     return (
       <div id="playlister-statusbar">
         <Typography variant="h4">{text}</Typography>
