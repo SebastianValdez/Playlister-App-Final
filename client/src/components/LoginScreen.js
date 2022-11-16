@@ -33,7 +33,8 @@ export default function LoginScreen() {
   }
 
   return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
+    // ! I changed the grid height from 100vh, just putting this here in case i have to revert
+    <Grid container component="main" sx={{ height: "80vh" }}>
       <CssBaseline />
       <Grid
         item
