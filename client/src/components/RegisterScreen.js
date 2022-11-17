@@ -23,9 +23,9 @@ export default function RegisterScreen() {
     const formData = new FormData(event.currentTarget);
     auth.registerUser(
       formData.get("username"),
-      formData.get("email"),
       formData.get("firstName"),
       formData.get("lastName"),
+      formData.get("email"),
       formData.get("password"),
       formData.get("passwordVerify")
     );

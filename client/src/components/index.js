@@ -14,6 +14,9 @@ import SplashScreen from "./SplashScreen";
 import Statusbar from "./Statusbar";
 import WorkspaceScreen from "./WorkspaceScreen";
 import MUILoginAlertModal from "./MUILoginAlertModal";
+import AllUserLists from "./AllUserLists";
+import OneUserLists from "./OneUserLists";
+
 /*
     This serves as a module so that we can import
     all the other components as we wish.
@@ -37,4 +40,6 @@ export {
   Statusbar,
   WorkspaceScreen,
   MUILoginAlertModal,
+  AllUserLists,
+  OneUserLists,
 };

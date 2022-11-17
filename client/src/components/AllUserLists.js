@@ -9,12 +9,8 @@ import Fab from "@mui/material/Fab";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-/*
-    This React component lists all the top5 lists in the UI.
-    
-    @author McKilla Gorilla
-*/
-const HomeScreen = () => {
+
+export default function AllUserLists() {
   const { store } = useContext(GlobalStoreContext);
 
   useEffect(() => {
@@ -55,6 +51,4 @@ const HomeScreen = () => {
       </div>
     </div>
   );
-};
-
-export default HomeScreen;
+}
