@@ -27,6 +27,48 @@ export default function ControlBanner() {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
 
+  const handleSortListsMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleSortListsMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const sortListsMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      // id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMenuOpen}
+      onClose={handleSortListsMenuClose}
+    >
+      <MenuItem onClick={handleSortListsMenuClose}>
+        <Link to="">Name (A - Z)</Link>
+      </MenuItem>
+      <MenuItem onClick={handleSortListsMenuClose}>
+        <Link to="">Publish Date (Newest)</Link>
+      </MenuItem>
+      <MenuItem onClick={handleSortListsMenuClose}>
+        <Link to="">Listens (High - Low)</Link>
+      </MenuItem>
+      <MenuItem onClick={handleSortListsMenuClose}>
+        <Link to="">Likes (High - Low)</Link>
+      </MenuItem>
+      <MenuItem onClick={handleSortListsMenuClose}>
+        <Link to="">Dislikes (High - Low)</Link>
+      </MenuItem>
+    </Menu>
+  );
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ backgroundColor: "black" }}>
@@ -47,7 +89,9 @@ export default function ControlBanner() {
               component="div"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              <HomeOutlinedIcon sx={{ fontSize: 40 }}></HomeOutlinedIcon>
+              <Link style={{ textDecoration: "none", color: "white" }} to="/">
+                <HomeOutlinedIcon sx={{ fontSize: 40 }}></HomeOutlinedIcon>
+              </Link>
             </Typography>
 
             {/* // ! USER LISTS */}
@@ -57,7 +101,10 @@ export default function ControlBanner() {
               component="div"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              <Link style={{ textDecoration: "none", color: "white" }} to="/">
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/userLists"
+              >
                 <PersonOutlineOutlinedIcon
                   sx={{ fontSize: 40 }}
                 ></PersonOutlineOutlinedIcon>
@@ -71,7 +118,10 @@ export default function ControlBanner() {
               component="div"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              <Link style={{ textDecoration: "none", color: "white" }} to="/">
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/allLists"
+              >
                 <GroupOutlinedIcon sx={{ fontSize: 40 }}></GroupOutlinedIcon>
               </Link>
             </Typography>
@@ -100,7 +150,10 @@ export default function ControlBanner() {
               component="div"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              <MenuOutlinedIcon sx={{ fontSize: 40 }}></MenuOutlinedIcon>
+              <MenuOutlinedIcon
+                sx={{ fontSize: 40 }}
+                onClick={handleSortListsMenuOpen}
+              ></MenuOutlinedIcon>
             </Typography>
           </Box>
         </Toolbar>

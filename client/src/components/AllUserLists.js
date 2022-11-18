@@ -31,7 +31,6 @@ export default function AllUserLists() {
   return (
     <div id="playlist-selector">
       <div id="list-selector-list">
-        {listCard}
         <MUIDeleteModal />
       </div>
       <div id="youtube-comment-component">
