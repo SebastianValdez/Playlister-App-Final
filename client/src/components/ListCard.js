@@ -10,9 +10,12 @@ import TextField from "@mui/material/TextField";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import WorkspaceScreen from "./WorkspaceScreen";
 import SongCard from "./SongCard.js";
 import List from "@mui/material/List";
+import Button from "@mui/material/Button";
+import { borderRadius } from "@mui/system";
 /*
     This is a card in our list of top 5 lists. It lets select
     a list for editing and it has controls for changing its 
@@ -149,7 +152,6 @@ function ListCard(props) {
           flexDirection: "column",
         }}
         style={{ width: "100%" }}
-        button
         // onClick={(event) => {
         //   handleLoadList(event, idNamePair._id);
         // }}
@@ -184,8 +186,21 @@ function ListCard(props) {
               justifyContent: "space-between",
             }}
           >
-            <ThumbUpIcon sx={{ fontSize: 40 }}></ThumbUpIcon>
-            <ThumbDownAltIcon sx={{ fontSize: 40 }}></ThumbDownAltIcon>
+            <IconButton
+              sx={{ fontSize: 40 }}
+              style={{ color: "black" }}
+              onClick={console.log("hello")}
+            >
+              <ThumbUpIcon sx={{ fontSize: 40 }}></ThumbUpIcon>
+            </IconButton>
+
+            <IconButton
+              sx={{ fontSize: 40 }}
+              style={{ color: "black" }}
+              pnClick={console.log("hello")}
+            >
+              <ThumbDownAltIcon sx={{ fontSize: 40 }}></ThumbDownAltIcon>
+            </IconButton>
           </Box>
         </Box>
 
@@ -248,7 +263,6 @@ function ListCard(props) {
           flexDirection: "column",
         }}
         style={{ width: "100%", height: "45%" }}
-        button
         // onClick={(event) => {
         //   handleLoadList(event, idNamePair._id);
         // }}
@@ -257,7 +271,6 @@ function ListCard(props) {
         <Box
           sx={{
             p: 1,
-            flexGrow: 1,
             display: "flex",
             flexDirection: "row",
             fontWeight: "bold",
@@ -283,30 +296,127 @@ function ListCard(props) {
               justifyContent: "space-between",
             }}
           >
-            <ThumbUpIcon sx={{ fontSize: 40 }}></ThumbUpIcon>
-            <ThumbDownAltIcon sx={{ fontSize: 40 }}></ThumbDownAltIcon>
+            <IconButton
+              sx={{ fontSize: 40 }}
+              style={{ color: "black" }}
+              onClick={console.log("hello")}
+            >
+              <ThumbUpIcon sx={{ fontSize: 40 }}></ThumbUpIcon>
+            </IconButton>
+
+            <IconButton
+              sx={{ fontSize: 40 }}
+              style={{ color: "black" }}
+              pnClick={console.log("hello")}
+            >
+              <ThumbDownAltIcon sx={{ fontSize: 40 }}></ThumbDownAltIcon>
+            </IconButton>
           </Box>
         </Box>
 
         {/* // ! THE MIDDLE CONTAINER, HOLDS THE LISTS OF SONGS */}
 
-        <Box style={{ width: "100%" }}>
+        <Box style={{ width: "100%" }} sx={{ flexGrow: 1 }}>
           <List
             id="playlist-cards"
             sx={{
               width: "100%",
-              background: "linear-gradient(to bottom, #084eb8, #1bbe96)",
+              height: "95%",
+              background: "lightgrey",
+              border: "solid",
+              borderRadius: "10px",
             }}
           >
             {songArray}
           </List>
         </Box>
 
+        {/* // ! THE SECOND MIDDLE CONTAINER, HOLDS THE BUTTONS TO MANIPULATE */}
+
+        <Box
+          sx={{
+            m: 1,
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box>
+            <Button
+              variant="contained"
+              sx={{ mr: 2 }}
+              style={{
+                backgroundColor: "lightgrey",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
+              Undo
+            </Button>
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "lightgrey",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
+              Redo
+            </Button>
+          </Box>
+
+          <Box>
+            <Button
+              variant="contained"
+              sx={{ mr: 2 }}
+              style={{
+                backgroundColor: "lightgrey",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
+              Publish
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ mr: 2 }}
+              style={{
+                backgroundColor: "lightgrey",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
+              Add
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ mr: 2 }}
+              style={{
+                backgroundColor: "lightgrey",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
+              Delete
+            </Button>
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "lightgrey",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
+              Duplicate
+            </Button>
+          </Box>
+        </Box>
+
         {/* // ! THE BOTTOM CONTAINER, HOLDS THE PUBLISHED, LISTENS, AND EXPANSION BUTTON */}
         <Box
           sx={{
             p: 1,
-            flexGrow: 1,
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
@@ -319,11 +429,14 @@ function ListCard(props) {
           <Box>Listens:</Box>
           <Box>
             <IconButton
-              onClick={() => setExpanded(false)}
+              onClick={() => {
+                setExpanded(false);
+                store.closeCurrentList();
+              }}
               sx={{ top: "10px" }}
               style={{ color: "black" }}
             >
-              <KeyboardDoubleArrowDownIcon sx={{ fontSize: 40 }} />
+              <KeyboardDoubleArrowUpIcon sx={{ fontSize: 40 }} />
             </IconButton>
           </Box>
         </Box>

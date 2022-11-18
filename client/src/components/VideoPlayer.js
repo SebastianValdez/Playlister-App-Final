@@ -6,6 +6,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import FastForwardIcon from "@mui/icons-material/FastForward";
 import FastRewindIcon from "@mui/icons-material/FastRewind";
+import IconButton from "@mui/material/IconButton";
 import { borderRadius } from "@mui/system";
 
 export default function VideoPlayer() {
@@ -27,10 +28,21 @@ export default function VideoPlayer() {
             justifyContent: "space-evenly",
           }}
         >
-          <FastRewindIcon sx={{ fontSize: 50 }}></FastRewindIcon>
-          <StopIcon sx={{ fontSize: 50 }}></StopIcon>
-          <PlayArrowIcon sx={{ fontSize: 50 }}></PlayArrowIcon>
-          <FastForwardIcon sx={{ fontSize: 50 }}></FastForwardIcon>
+          <IconButton style={{ color: "black" }}>
+            <FastRewindIcon sx={{ fontSize: 50 }}></FastRewindIcon>
+          </IconButton>
+
+          <IconButton style={{ color: "black" }}>
+            <StopIcon sx={{ fontSize: 50 }}></StopIcon>
+          </IconButton>
+
+          <IconButton style={{ color: "black" }}>
+            <PlayArrowIcon sx={{ fontSize: 50 }}></PlayArrowIcon>
+          </IconButton>
+
+          <IconButton style={{ color: "black" }}>
+            <FastForwardIcon sx={{ fontSize: 50 }}></FastForwardIcon>
+          </IconButton>
         </Box>
       </div>
     </div>

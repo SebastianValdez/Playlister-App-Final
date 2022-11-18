@@ -272,7 +272,7 @@ function GlobalStoreContextProvider(props) {
       payload: {},
     });
     tps.clearAllTransactions();
-    history.push("/"); // ! Fixes the issue where closing the list would just leave you in a blank page for some reason
+    // history.push("/"); // ! Fixes the issue where closing the list would just leave you in a blank page for some reason
   };
 
   // THIS FUNCTION CREATES A NEW LIST
