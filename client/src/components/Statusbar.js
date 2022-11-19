@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { GlobalStoreContext } from "../store";
+import { useLocation } from "react-router-dom";
 
 import { Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -12,6 +13,7 @@ import Fab from "@mui/material/Fab";
 */
 function Statusbar() {
   const { store } = useContext(GlobalStoreContext);
+  const location = useLocation();
 
   function handleCreateNewList() {
     store.createNewList();
@@ -35,7 +37,19 @@ function Statusbar() {
     );
   }
 
-  if (true) {
+  if (location.pathname === "/") {
+    return (
+      <div id="playlister-statusbar">
+        <Typography variant="h4">{text}</Typography>
+      </div>
+    );
+  } else if (location.pathname === "/userLists") {
+    return (
+      <div id="playlister-statusbar">
+        <Typography variant="h4">{text}</Typography>
+      </div>
+    );
+  } else if (location.pathname === "/allLists") {
     return (
       <div id="playlister-statusbar">
         <Typography variant="h4">{text}</Typography>
