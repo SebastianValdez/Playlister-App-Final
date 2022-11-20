@@ -136,7 +136,7 @@ export default function ControlBanner() {
             {/* // ! SEARCH BAR */}
             <TextField
               id="filled-basic"
-              label="Filled"
+              label="Search"
               variant="filled"
               style={{ backgroundColor: "white" }}
               sx={{ width: "700px" }}
@@ -156,15 +156,18 @@ export default function ControlBanner() {
                 component="div"
                 sx={{ display: { xs: "none", sm: "block" } }}
               >
-                <MenuOutlinedIcon
-                  sx={{ fontSize: 40 }}
+                <IconButton
+                  style={{ color: "white" }}
                   onClick={handleSortListsMenuOpen}
-                ></MenuOutlinedIcon>
+                  sx={{ left: "5px", bottom: "4px" }}
+                >
+                  <MenuOutlinedIcon sx={{ fontSize: 40 }}></MenuOutlinedIcon>
+                </IconButton>
               </Typography>
             </Box>
           </Toolbar>
         </AppBar>
-        {}
+        {sortListsMenu}
       </Box>
     );
   } else {

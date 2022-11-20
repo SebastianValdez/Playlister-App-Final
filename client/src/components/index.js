@@ -16,6 +16,7 @@ import WorkspaceScreen from "./WorkspaceScreen";
 import MUILoginAlertModal from "./MUILoginAlertModal";
 import AllUserLists from "./AllUserLists";
 import OneUserLists from "./OneUserLists";
+import Comments from "./Comments";
 
 /*
     This serves as a module so that we can import
@@ -42,4 +43,5 @@ export {
   MUILoginAlertModal,
   AllUserLists,
   OneUserLists,
+  Comments,
 };

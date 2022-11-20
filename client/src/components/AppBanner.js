@@ -108,7 +108,14 @@ export default function AppBanner() {
               component="div"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              <Link style={{ textDecoration: "none", color: "pink" }} to="/">
+              <Link
+                style={{
+                  textDecoration: "none",
+                  color: "rgb(231, 73, 112)",
+                  fontFamily: "Oleo Script, cursive",
+                }}
+                to="/"
+              >
                 Playlister
               </Link>
             </Typography>

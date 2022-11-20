@@ -1,8 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalStoreContext } from "../store";
+import AuthContext from "../auth";
 import ListCard from "./ListCard.js";
 import MUIDeleteModal from "./MUIDeleteModal";
 import VideoPlayer from "./VideoPlayer";
+import Comments from "./Comments";
 
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
@@ -16,17 +18,27 @@ import Button from "@mui/material/Button";
 */
 const HomeScreen = () => {
   const { store } = useContext(GlobalStoreContext);
+  const { auth } = useContext(AuthContext);
+
+  const [videoOrComment, setVideoOrComment] = useState("video");
 
   useEffect(() => {
-    // store.loadIdNamePairs();
     store.getAllPlaylists();
   }, []);
+
+  let listArray = [];
+
+  if (auth.user) {
+    listArray = store.playlistsArray.filter(
+      (list) => list.ownerEmail === auth.user.email
+    );
+  }
 
   let listCard = "";
   if (store) {
     listCard = (
       <List sx={{ width: "90%", left: "5%", bgcolor: "mint" }}>
-        {store.playlistsArray.map((list) => (
+        {listArray.map((list) => (
           <ListCard key={list._id} list={list} selected={false} />
         ))}
       </List>
@@ -41,18 +53,23 @@ const HomeScreen = () => {
       </div>
       <div id="youtube-comment-component">
         <div id="video-comments-buttons">
-          <Button variant="contained" style={{ backgroundColor: "black" }}>
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "black" }}
+            onClick={() => setVideoOrComment("video")}
+          >
             Player
           </Button>
           <Button
             variant="contained"
             style={{ backgroundColor: "black" }}
             sx={{ ml: "3px" }}
+            onClick={() => setVideoOrComment("comment")}
           >
             Comments
           </Button>
         </div>
-        <VideoPlayer />
+        {videoOrComment === "video" ? <VideoPlayer /> : <Comments />}
       </div>
     </div>
   );

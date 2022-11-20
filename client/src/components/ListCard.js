@@ -218,7 +218,7 @@ function ListCard(props) {
           backgroundColor: "beige",
           flexDirection: "column",
         }}
-        style={{ width: "100%", height: "45%" }}
+        style={{ width: "100%", height: "650px" }}
         // onClick={(event) => {
         //   handleLoadList(event, list._id);
         // }}

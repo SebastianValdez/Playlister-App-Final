@@ -55,6 +55,11 @@ body {
   border-radius: 10px;
 }
 
+#splash-screen-title {
+  font-family: 'Oleo Script', cursive;
+  color: rgb(231, 73, 112);
+}
+
 /* ! ##################################### */
 /* ! THIS IS THE CSS FOR THE SPLASH SCREEN */
 
@@ -76,6 +81,10 @@ body {
 #splash-screen-welcome-text, #splash-screen-user-credit-text {
   font-size: 1vw;
   max-width: 50vw;
+}
+
+#splash-screen-user-credit-text {
+  padding-top: 20px;
 }
 
 #splash-screen-buttons {
@@ -208,8 +217,8 @@ body {
 
 #video-player-container {
   background-color: beige;
-  border-radius: 2px;
-  height: 95%;
+  border-radius: 3px;
+  height: 94%;
 }
 
 #video-comments-buttons {
@@ -255,6 +264,29 @@ body {
 }
 
 /* ! THE VIDEO PLAYER COMPONENT */
+/* ! ##################################### */
+
+/* ! THE COMMENT SECTION COMPONENT */
+/* ! ##################################### */
+
+#comments-container {
+  width: 100%;
+  height: 94%;
+  background-color: beige;
+  border-radius: 3px;
+}
+
+#comments-list {
+  height: 91%;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+#new-comments-container {
+  height: 10%;
+}
+
+/* ! THE COMMENT SECTION COMPONENT */
 /* ! ##################################### */
 
 .list-card,
