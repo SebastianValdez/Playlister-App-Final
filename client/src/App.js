@@ -9,6 +9,7 @@ import {
   HomeWrapper,
   LoginScreen,
   RegisterScreen,
+  HomeScreen,
   Statusbar,
   WorkspaceScreen,
   AllUserLists,
@@ -36,9 +37,10 @@ const App = () => {
             <Route path="/" exact component={HomeWrapper} />
             <Route path="/login/" exact component={LoginScreen} />
             <Route path="/register/" exact component={RegisterScreen} />
-            <Route path="/playlist/:id" exact component={WorkspaceScreen} />
+            <Route path="/currentUserLists" exact component={HomeScreen} />
             <Route path="/allLists" exact component={AllUserLists} />
             <Route path="/userLists" exact component={OneUserLists} />
+            <Route path="/playlist/:id" exact component={WorkspaceScreen} />
           </Switch>
           <Statusbar />
         </GlobalStoreContextProvider>

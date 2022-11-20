@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../auth";
 import { GlobalStoreContext } from "../store";
+import { useLocation } from "react-router-dom";
 
 import EditToolbar from "./EditToolbar";
 
@@ -19,11 +20,11 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { height } from "@mui/system";
 
 export default function ControlBanner() {
   const { auth } = useContext(AuthContext);
   const { store } = useContext(GlobalStoreContext);
+  const location = useLocation();
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
 
@@ -69,96 +70,104 @@ export default function ControlBanner() {
     </Menu>
   );
 
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ backgroundColor: "black" }}>
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          {/* // ! Box that holds the three buttons for navigation */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "130px",
-            }}
-          >
-            {/* // ! HOME BUTTON */}
-            <Typography
-              variant="h4"
-              noWrap
-              component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
+  // ! WE DONT SHOW THIS BAR ON THE SPLASH SCREEN
+  if (location.pathname !== "/") {
+    return (
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" style={{ backgroundColor: "black" }}>
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            {/* // ! Box that holds the three buttons for navigation */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "130px",
+              }}
             >
-              <Link style={{ textDecoration: "none", color: "white" }} to="/">
-                <HomeOutlinedIcon sx={{ fontSize: 40 }}></HomeOutlinedIcon>
-              </Link>
-            </Typography>
-
-            {/* // ! USER LISTS */}
-            <Typography
-              variant="h5"
-              noWrap
-              component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
-              <Link
-                style={{ textDecoration: "none", color: "white" }}
-                to="/userLists"
+              {/* // ! HOME BUTTON */}
+              <Typography
+                variant="h4"
+                noWrap
+                component="div"
+                sx={{ display: { xs: "none", sm: "block" } }}
               >
-                <PersonOutlineOutlinedIcon
+                <Link
+                  style={{ textDecoration: "none", color: "white" }}
+                  to="/currentUserLists"
+                >
+                  <HomeOutlinedIcon sx={{ fontSize: 40 }}></HomeOutlinedIcon>
+                </Link>
+              </Typography>
+
+              {/* // ! USER LISTS */}
+              <Typography
+                variant="h5"
+                noWrap
+                component="div"
+                sx={{ display: { xs: "none", sm: "block" } }}
+              >
+                <Link
+                  style={{ textDecoration: "none", color: "white" }}
+                  to="/userLists"
+                >
+                  <PersonOutlineOutlinedIcon
+                    sx={{ fontSize: 40 }}
+                  ></PersonOutlineOutlinedIcon>
+                </Link>
+              </Typography>
+
+              {/* // ! ALL LISTS */}
+              <Typography
+                variant="h5"
+                noWrap
+                component="div"
+                sx={{ display: { xs: "none", sm: "block" } }}
+              >
+                <Link
+                  style={{ textDecoration: "none", color: "white" }}
+                  to="/allLists"
+                >
+                  <GroupOutlinedIcon sx={{ fontSize: 40 }}></GroupOutlinedIcon>
+                </Link>
+              </Typography>
+            </Box>
+
+            {/* // ! SEARCH BAR */}
+            <TextField
+              id="filled-basic"
+              label="Filled"
+              variant="filled"
+              style={{ backgroundColor: "white" }}
+              sx={{ width: "700px" }}
+            />
+
+            {/* // ! SORT MENU */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                variant="h3"
+                noWrap
+                component="div"
+                sx={{ display: { xs: "none", sm: "block" } }}
+              >
+                <MenuOutlinedIcon
                   sx={{ fontSize: 40 }}
-                ></PersonOutlineOutlinedIcon>
-              </Link>
-            </Typography>
-
-            {/* // ! ALL LISTS */}
-            <Typography
-              variant="h5"
-              noWrap
-              component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
-              <Link
-                style={{ textDecoration: "none", color: "white" }}
-                to="/allLists"
-              >
-                <GroupOutlinedIcon sx={{ fontSize: 40 }}></GroupOutlinedIcon>
-              </Link>
-            </Typography>
-          </Box>
-
-          {/* // ! SEARCH BAR */}
-          <TextField
-            id="filled-basic"
-            label="Filled"
-            variant="filled"
-            style={{ backgroundColor: "white" }}
-            sx={{ width: "700px" }}
-          />
-
-          {/* // ! SORT MENU */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              variant="h3"
-              noWrap
-              component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
-              <MenuOutlinedIcon
-                sx={{ fontSize: 40 }}
-                onClick={handleSortListsMenuOpen}
-              ></MenuOutlinedIcon>
-            </Typography>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {}
-    </Box>
-  );
+                  onClick={handleSortListsMenuOpen}
+                ></MenuOutlinedIcon>
+              </Typography>
+            </Box>
+          </Toolbar>
+        </AppBar>
+        {}
+      </Box>
+    );
+  } else {
+    return null;
+  }
 }

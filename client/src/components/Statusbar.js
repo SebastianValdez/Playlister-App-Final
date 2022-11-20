@@ -37,7 +37,7 @@ function Statusbar() {
     );
   }
 
-  if (location.pathname === "/") {
+  if (location.pathname === "/currentUserLists") {
     return (
       <div id="playlister-statusbar">
         <Typography variant="h4">{text}</Typography>

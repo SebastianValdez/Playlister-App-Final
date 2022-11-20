@@ -174,7 +174,7 @@ function AuthContextProvider(props) {
             user: response.data.user,
           },
         });
-        history.push("/");
+        history.push("/currentUserLists");
       }
     } catch (error) {
       console.log("Error: ", error);

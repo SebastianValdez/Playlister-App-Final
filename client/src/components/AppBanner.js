@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../auth";
 import { GlobalStoreContext } from "../store";
+import { useLocation } from "react-router-dom";
 
 import EditToolbar from "./EditToolbar";
 
@@ -17,6 +18,7 @@ import Typography from "@mui/material/Typography";
 export default function AppBanner() {
   const { auth } = useContext(AuthContext);
   const { store } = useContext(GlobalStoreContext);
+  const location = useLocation();
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
 
@@ -95,38 +97,42 @@ export default function AppBanner() {
     else return <AccountCircle />;
   }
 
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography
-            variant="h4"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            <Link style={{ textDecoration: "none", color: "pink" }} to="/">
-              Playlister
-            </Link>
-          </Typography>
-          <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-              style={{ textDecoration: "none", color: "black" }}
+  if (location.pathname !== "/") {
+    return (
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography
+              variant="h4"
+              noWrap
+              component="div"
+              sx={{ display: { xs: "none", sm: "block" } }}
             >
-              {getAccountMenu(auth.loggedIn)}
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {menu}
-    </Box>
-  );
+              <Link style={{ textDecoration: "none", color: "pink" }} to="/">
+                Playlister
+              </Link>
+            </Typography>
+            <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                {getAccountMenu(auth.loggedIn)}
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+        {menu}
+      </Box>
+    );
+  } else {
+    return null;
+  }
 }
