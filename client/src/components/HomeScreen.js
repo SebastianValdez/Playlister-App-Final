@@ -18,15 +18,16 @@ const HomeScreen = () => {
   const { store } = useContext(GlobalStoreContext);
 
   useEffect(() => {
-    store.loadIdNamePairs();
+    // store.loadIdNamePairs();
+    store.getAllPlaylists();
   }, []);
 
   let listCard = "";
   if (store) {
     listCard = (
       <List sx={{ width: "90%", left: "5%", bgcolor: "mint" }}>
-        {store.idNamePairs.map((pair) => (
-          <ListCard key={pair._id} idNamePair={pair} selected={false} />
+        {store.playlistsArray.map((list) => (
+          <ListCard key={list._id} list={list} selected={false} />
         ))}
       </List>
     );

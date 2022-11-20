@@ -152,7 +152,7 @@ getPlaylists = async (req, res) => {
         .status(404)
         .json({ success: false, error: `Playlists not found` });
     }
-    return res.status(200).json({ success: true, data: playlists });
+    return res.status(200).json({ success: true, playlists: playlists });
   }).catch((err) => console.log(err));
 };
 

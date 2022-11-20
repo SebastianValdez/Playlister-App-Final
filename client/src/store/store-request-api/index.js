@@ -60,12 +60,15 @@ export const updatePlaylistById = (id, playlist) => {
   });
 };
 
+export const getAllPlaylists = () => api.get(`/playlists/`);
+
 const apis = {
   createPlaylist,
   deletePlaylistById,
   getPlaylistById,
   getPlaylistPairs,
   updatePlaylistById,
+  getAllPlaylists,
 };
 
 export default apis;

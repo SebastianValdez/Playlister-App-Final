@@ -31,7 +31,7 @@ function ListCard(props) {
   // ! New state made for list card expansion
   const [expanded, setExpanded] = useState(false);
 
-  const { idNamePair, selected } = props;
+  const { list, selected } = props;
 
   function handleLoadList(event, id) {
     console.log("handleLoadList for " + id);
@@ -86,52 +86,6 @@ function ListCard(props) {
   if (store.isListNameEditActive) {
     cardStatus = true;
   }
-  // let cardElement = (
-  //   <ListItem
-  //     id={idNamePair._id}
-  //     key={idNamePair._id}
-  //     sx={{
-  //       display: "flex",
-  //       p: 1.5,
-  //       border: 3,
-  //       borderRadius: 2,
-  //       mt: 1,
-  //       backgroundColor: "beige",
-  //     }}
-  //     style={{ width: "100%", fontSize: "48pt" }}
-  //     button
-  //     // onClick={(event) => {
-  //     //   handleLoadList(event, idNamePair._id);
-  //     // }}
-  //   >
-  //     {/* // ! THE TOP CONTAINER, HOLDS THE TITLE, AUTHOUR, AND LIKE AND DISLIKE */}
-  //     <Box sx={{ p: 1, flexGrow: 1 }}>
-  //       <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
-  //       <Box>By: </Box>
-  //       <Box>
-  //         <ThumbUpIcon></ThumbUpIcon>
-  //         <ThumbDownAltIcon></ThumbDownAltIcon>
-  //       </Box>
-  //     </Box>
-
-  //     {/* // ! THE BOTTOM CONTAINER, HOLDS THE PUBLISHED, LISTENS, AND EXPANSION BUTTON */}
-  //     <Box sx={{ p: 1 }}>
-  //       <IconButton onClick={handleToggleEdit} aria-label="edit">
-  //         <EditIcon style={{ fontSize: "32pt" }} />
-  //       </IconButton>
-  //     </Box>
-  //     <Box sx={{ p: 1 }}>
-  //       <IconButton
-  //         onClick={(event) => {
-  //           handleDeleteList(event, idNamePair._id);
-  //         }}
-  //         aria-label="delete"
-  //       >
-  //         <DeleteIcon style={{ fontSize: "32pt" }} />
-  //       </IconButton>
-  //     </Box>
-  //   </ListItem>
-  // );
 
   let cardElement = "";
 
@@ -140,8 +94,8 @@ function ListCard(props) {
   if (!expanded) {
     cardElement = (
       <ListItem
-        id={idNamePair._id}
-        key={idNamePair._id}
+        id={list._id}
+        key={list._id}
         sx={{
           display: "flex",
           p: 1.5,
@@ -153,7 +107,7 @@ function ListCard(props) {
         }}
         style={{ width: "100%" }}
         // onClick={(event) => {
-        //   handleLoadList(event, idNamePair._id);
+        //   handleLoadList(event, list._id);
         // }}
       >
         {/* // ! THE TOP CONTAINER, HOLDS THE TITLE, AUTHOUR, AND LIKE AND DISLIKE */}
@@ -175,8 +129,8 @@ function ListCard(props) {
             }}
             style={{ width: "100%" }}
           >
-            <Box sx={{ flexGrow: 1, fontSize: 28 }}>{idNamePair.name}</Box>
-            <Box>By: </Box>
+            <Box sx={{ flexGrow: 1, fontSize: 28 }}>{list.name}</Box>
+            <Box>By: {list.ownerUsername} </Box>
           </Box>
 
           <Box
@@ -192,6 +146,7 @@ function ListCard(props) {
               onClick={console.log("hello")}
             >
               <ThumbUpIcon sx={{ fontSize: 40 }}></ThumbUpIcon>
+              {list.likes}
             </IconButton>
 
             <IconButton
@@ -200,6 +155,7 @@ function ListCard(props) {
               pnClick={console.log("hello")}
             >
               <ThumbDownAltIcon sx={{ fontSize: 40 }}></ThumbDownAltIcon>
+              {list.dislikes}
             </IconButton>
           </Box>
         </Box>
@@ -217,13 +173,13 @@ function ListCard(props) {
           }}
           style={{ width: "100%" }}
         >
-          <Box>Published:</Box>
-          <Box>Listens:</Box>
+          <Box>Published: {list.createdAt} </Box>
+          <Box>Listens: {list.listens} </Box>
           <Box>
             <IconButton
               onClick={(event) => {
                 setExpanded(true);
-                handleLoadList(event, idNamePair._id);
+                handleLoadList(event, list._id);
               }}
               sx={{ top: "10px" }}
               style={{ color: "black" }}
@@ -251,8 +207,8 @@ function ListCard(props) {
     }
     cardElement = (
       <ListItem
-        id={idNamePair._id}
-        key={idNamePair._id}
+        id={list._id}
+        key={list._id}
         sx={{
           display: "flex",
           p: 1.5,
@@ -264,7 +220,7 @@ function ListCard(props) {
         }}
         style={{ width: "100%", height: "45%" }}
         // onClick={(event) => {
-        //   handleLoadList(event, idNamePair._id);
+        //   handleLoadList(event, list._id);
         // }}
       >
         {/* // ! THE TOP CONTAINER, HOLDS THE TITLE, AUTHOUR, AND LIKE AND DISLIKE */}
@@ -285,8 +241,8 @@ function ListCard(props) {
             }}
             style={{ width: "100%" }}
           >
-            <Box sx={{ flexGrow: 1, fontSize: 28 }}>{idNamePair.name}</Box>
-            <Box>By: </Box>
+            <Box sx={{ flexGrow: 1, fontSize: 28 }}>{list.name}</Box>
+            <Box>By: {list.ownerUsername} </Box>
           </Box>
 
           <Box
@@ -302,6 +258,7 @@ function ListCard(props) {
               onClick={console.log("hello")}
             >
               <ThumbUpIcon sx={{ fontSize: 40 }}></ThumbUpIcon>
+              {list.likes}
             </IconButton>
 
             <IconButton
@@ -310,6 +267,7 @@ function ListCard(props) {
               pnClick={console.log("hello")}
             >
               <ThumbDownAltIcon sx={{ fontSize: 40 }}></ThumbDownAltIcon>
+              {list.dislikes}
             </IconButton>
           </Box>
         </Box>
@@ -425,8 +383,8 @@ function ListCard(props) {
           }}
           style={{ width: "100%" }}
         >
-          <Box>Published:</Box>
-          <Box>Listens:</Box>
+          <Box>Published: {list.createdAt} </Box>
+          <Box>Listens: {list.listens} </Box>
           <Box>
             <IconButton
               onClick={() => {
@@ -450,14 +408,14 @@ function ListCard(props) {
         margin="normal"
         required
         fullWidth
-        id={"list-" + idNamePair._id}
+        id={"list-" + list._id}
         label="Playlist Name"
         name="name"
         autoComplete="Playlist Name"
         className="list-card"
         onKeyPress={handleKeyPress}
         onChange={handleUpdateText}
-        defaultValue={idNamePair.name}
+        defaultValue={list.name}
         inputProps={{ style: { fontSize: 48 } }}
         InputLabelProps={{ style: { fontSize: 24 } }}
         autoFocus
