@@ -33,6 +33,7 @@ function ListCard(props) {
 
   const { list, selected } = props;
 
+  // ! Use this method to set current list, this will control what is displayed in the video and comments tab
   function handleLoadList(event, id) {
     console.log("handleLoadList for " + id);
     if (!event.target.disabled) {
@@ -45,6 +46,27 @@ function ListCard(props) {
       // CHANGE THE CURRENT LIST
       store.setCurrentList(id);
     }
+  }
+
+  // ! Use this method to get the songs of a list, we will display these in the list card
+  function handleLoadSongs() {
+    let playlist = store.playlistsArray.filter(
+      (lists) => lists._id === list.id
+    );
+    return playlist.songs;
+  }
+
+  function handleAddNewSong() {
+    store.addNewSong();
+  }
+  function handleUndo() {
+    store.undo();
+  }
+  function handleRedo() {
+    store.redo();
+  }
+  function handleClose() {
+    store.closeCurrentList();
   }
 
   function handleToggleEdit(event) {
@@ -274,12 +296,14 @@ function ListCard(props) {
 
         {/* // ! THE MIDDLE CONTAINER, HOLDS THE LISTS OF SONGS */}
 
-        <Box style={{ width: "100%" }} sx={{ flexGrow: 1 }}>
+        <Box style={{ width: "100%", maxHeight: "67%" }} sx={{ flexGrow: 1 }}>
           <List
             id="playlist-cards"
             sx={{
               width: "100%",
-              height: "95%",
+
+              maxHeight: "90%",
+              overflow: "auto",
               background: "lightgrey",
               border: "solid",
               borderRadius: "10px",
@@ -301,6 +325,18 @@ function ListCard(props) {
           }}
         >
           <Box>
+            <Button
+              variant="contained"
+              sx={{ mr: 2 }}
+              style={{
+                backgroundColor: "lightgrey",
+                color: "black",
+                fontWeight: "bold",
+              }}
+              onClick={handleAddNewSong}
+            >
+              Add
+            </Button>
             <Button
               variant="contained"
               sx={{ mr: 2 }}
@@ -333,30 +369,20 @@ function ListCard(props) {
                 color: "black",
                 fontWeight: "bold",
               }}
-            >
-              Publish
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ mr: 2 }}
-              style={{
-                backgroundColor: "lightgrey",
-                color: "black",
-                fontWeight: "bold",
-              }}
-            >
-              Add
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ mr: 2 }}
-              style={{
-                backgroundColor: "lightgrey",
-                color: "black",
-                fontWeight: "bold",
-              }}
+              onClick={handleDeleteList}
             >
               Delete
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ mr: 2 }}
+              style={{
+                backgroundColor: "lightgrey",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
+              Publish
             </Button>
             <Button
               variant="contained"

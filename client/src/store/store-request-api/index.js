@@ -62,6 +62,9 @@ export const updatePlaylistById = (id, playlist) => {
 
 export const getAllPlaylists = () => api.get(`/playlists/`);
 
+export const addNewComment = (id, playlist) =>
+  api.post(`/playlist/${id}`, { playlist: playlist });
+
 const apis = {
   createPlaylist,
   deletePlaylistById,
@@ -69,6 +72,7 @@ const apis = {
   getPlaylistPairs,
   updatePlaylistById,
   getAllPlaylists,
+  addNewComment,
 };
 
 export default apis;

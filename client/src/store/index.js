@@ -33,6 +33,7 @@ export const GlobalStoreActionType = {
   HIDE_MODALS: "HIDE_MODALS",
   UNMARK_LIST_FOR_DELETION: "UNMARK_LIST_FOR_DELETION",
   LOAD_ALL_PLAYLISTS: "LOAD_ALL_PLAYLISTS",
+  ADD_NEW_COMMENT: "ADD_NEW_COMMENT",
 };
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -250,6 +251,20 @@ function GlobalStoreContextProvider(props) {
           listMarkedForDeletion: null,
         });
       }
+      case GlobalStoreActionType.ADD_NEW_COMMENT: {
+        return setStore({
+          currentModal: CurrentModal.NONE,
+          idNamePairs: store.idNamePairs,
+          playlistsArray: store.playlistsArray,
+          currentList: store.currentList,
+          currentSongIndex: -1,
+          currentSong: store.currentSong,
+          newListCounter: store.newListCounter,
+          listNameActive: false,
+          listIdMarkedForDeletion: null,
+          listMarkedForDeletion: null,
+        });
+      }
       default:
         return store;
     }
@@ -326,7 +341,8 @@ function GlobalStoreContextProvider(props) {
       });
 
       // IF IT'S A VALID LIST THEN LET'S START EDITING IT
-      history.push("/");
+      history.push("/currentUserLists");
+      store.getAllPlaylists();
     } else {
       console.log("API FAILED TO CREATE A NEW LIST");
     }
@@ -517,20 +533,45 @@ function GlobalStoreContextProvider(props) {
     );
   };
 
+  // ! Adds a new comment to the current list
+  store.addNewComment = (user, comment) => {
+    async function asyncAddComment(user, comment) {
+      let newComment = { author: user, comment: comment };
+      let list = store.currentList;
+      list.comments.push(newComment);
+
+      const response = await api.addNewComment(store.currentList._id, list);
+      if (response.data.success) {
+        storeReducer({
+          type: GlobalStoreActionType.ADD_NEW_COMMENT,
+          payload: null,
+        });
+      } else {
+        console.log("FAILED TO ADD A NEW COMMENT");
+      }
+    }
+
+    asyncAddComment(user, comment);
+  };
+
   // ! Gets every playlist, not in some dumb pair format
   store.getAllPlaylists = () => {
     async function asyncAllLists() {
-      const response = await api.getAllPlaylists();
-      if (response.data.success) {
-        tps.clearAllTransactions();
-        let listsArray = response.data.playlists;
-        console.log("hello " + response.data.playlists);
-        storeReducer({
-          type: GlobalStoreActionType.LOAD_ALL_PLAYLISTS,
-          payload: listsArray,
-        });
-      } else {
-        console.log("API FAILED TO GET ALL THE LISTS");
+      try {
+        const response = await api.getAllPlaylists();
+        if (response.data.success) {
+          tps.clearAllTransactions();
+          let listsArray = response.data.playlists;
+          console.log("hello " + response.data.playlists);
+          storeReducer({
+            type: GlobalStoreActionType.LOAD_ALL_PLAYLISTS,
+            payload: listsArray,
+          });
+        } else {
+          console.log("API FAILED TO GET ALL THE LISTS");
+        }
+      } catch (e) {
+        console.log("Error getting the playlists");
       }
     }
     asyncAllLists();

@@ -217,6 +217,24 @@ updatePlaylist = async (req, res) => {
   });
 };
 
+addNewComment = async (req, res) => {
+  console.log("HANNNNO " + JSON.stringify(req.body));
+  console.log("HANNNNO AGAIN" + JSON.stringify(req.body.playlist));
+  console.log("HANNNNO AGAIN AGAIN " + req.body.playlist.comments);
+
+  const playlist = await Playlist.findOneAndUpdate(
+    { _id: req.params.id },
+    { comments: req.body.playlist.comments },
+    (err, playlist) => {
+      if (err) {
+        return res.status(400).json({ success: false, error: err });
+      } else {
+        return res.status(200).json({ success: true, playlist: playlist });
+      }
+    }
+  );
+};
+
 module.exports = {
   createPlaylist,
   deletePlaylist,
@@ -224,4 +242,5 @@ module.exports = {
   getPlaylistPairs,
   getPlaylists,
   updatePlaylist,
+  addNewComment,
 };

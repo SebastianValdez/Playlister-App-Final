@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { GlobalStoreContext } from "../store";
+import AuthContext from "../auth";
 import { useLocation } from "react-router-dom";
 
 import { Typography } from "@mui/material";
@@ -13,6 +14,7 @@ import Fab from "@mui/material/Fab";
 */
 function Statusbar() {
   const { store } = useContext(GlobalStoreContext);
+  const { auth } = useContext(AuthContext);
   const location = useLocation();
 
   function handleCreateNewList() {
@@ -36,6 +38,8 @@ function Statusbar() {
       </div>
     );
   }
+
+  if (auth.user === "guest") text = "";
 
   if (location.pathname === "/currentUserLists") {
     return (
