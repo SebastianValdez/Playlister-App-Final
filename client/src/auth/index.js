@@ -14,6 +14,7 @@ export const AuthActionType = {
   LOGIN_ERROR: "LOGIN_ERROR",
   REGISTER_ERROR: "REGISTER_ERROR",
   HIDE_MODALS: "HIDE_MODALS",
+  LOGIN_GUEST: "LOGIN_GUEST",
 };
 
 const CurrentModal = {
@@ -90,6 +91,14 @@ function AuthContextProvider(props) {
       case AuthActionType.HIDE_MODALS: {
         return setAuth({
           user: null,
+          loggedIn: false,
+          currentModal: CurrentModal.NONE,
+          errorType: null,
+        });
+      }
+      case AuthActionType.LOGIN_GUEST: {
+        return setAuth({
+          user: payload,
           loggedIn: false,
           currentModal: CurrentModal.NONE,
           errorType: null,
@@ -185,6 +194,15 @@ function AuthContextProvider(props) {
       }
       console.log(this.loggedIn, this.errorType);
     }
+  };
+
+  // ! Tells the auth reducer that we are now on "guest" mode, nothing complex
+  auth.loginGuest = function () {
+    authReducer({
+      type: AuthActionType.LOGIN_GUEST,
+      payload: "guest",
+    });
+    history.push("/allLists");
   };
 
   auth.logoutUser = async function () {

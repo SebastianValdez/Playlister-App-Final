@@ -91,10 +91,11 @@ export default function AppBanner() {
   }
 
   function getAccountMenu(loggedIn) {
-    let userInitials = auth.getUserInitials();
-    console.log("userInitials: " + userInitials);
-    if (loggedIn) return <div>{userInitials}</div>;
-    else return <AccountCircle />;
+    if (loggedIn) {
+      let userInitials = auth.getUserInitials();
+      console.log("userInitials: " + userInitials);
+      return <div>{userInitials}</div>;
+    } else return <AccountCircle />;
   }
 
   if (location.pathname !== "/") {

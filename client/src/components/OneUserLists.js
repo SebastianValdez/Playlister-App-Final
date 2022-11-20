@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalStoreContext } from "../store";
+import AuthContext from "../auth";
+import { useHistory } from "react-router-dom";
+
 import ListCard from "./ListCard.js";
 import MUIDeleteModal from "./MUIDeleteModal";
 import VideoPlayer from "./VideoPlayer";
@@ -17,8 +20,15 @@ import Button from "@mui/material/Button";
 */
 const HomeScreen = () => {
   const { store } = useContext(GlobalStoreContext);
+  const { auth } = useContext(AuthContext);
+  const history = useHistory();
 
   const [videoOrComment, setVideoOrComment] = useState("video");
+
+  // ! The user needs to be either logged in or using a guest account, otherwise redirect
+  if (!auth.user) {
+    history.push("/");
+  }
 
   useEffect(() => {
     store.getAllPlaylists();

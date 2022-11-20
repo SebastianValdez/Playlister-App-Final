@@ -1,6 +1,10 @@
 import { Button } from "@mui/material";
+import React, { useContext } from "react";
+import AuthContext from "../auth";
 
 export default function SplashScreen() {
+  const { auth } = useContext(AuthContext);
+
   return (
     <div id="splash-screen">
       <div id="splash-screen-title">Playlister</div>
@@ -19,13 +23,15 @@ export default function SplashScreen() {
         >
           Login
         </Button>
+
         <Button
           variant="contained"
           style={{ backgroundColor: "black" }}
-          href=""
+          onClick={() => auth.loginGuest()}
         >
           Continue as Guest
         </Button>
+
         <Button
           variant="contained"
           style={{ backgroundColor: "black" }}
