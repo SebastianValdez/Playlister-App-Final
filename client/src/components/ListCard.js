@@ -56,19 +56,30 @@ function ListCard(props) {
     return playlist.songs;
   }
 
+  // ! Functions for handling all the button inputs in list card
   function handleAddNewSong() {
     store.addNewSong();
   }
+
   function handleUndo() {
     store.undo();
   }
+
   function handleRedo() {
     store.redo();
   }
+
   function handleClose() {
     store.closeCurrentList();
   }
 
+  function handleDelete() {}
+
+  function handlePublish() {}
+
+  function handleDuplicate() {}
+
+  // ! Edit playlist name functions
   function handleToggleEdit(event) {
     event.stopPropagation();
     toggleEdit();

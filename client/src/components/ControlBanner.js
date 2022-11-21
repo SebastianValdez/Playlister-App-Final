@@ -70,8 +70,22 @@ export default function ControlBanner() {
     </Menu>
   );
 
-  // ! WE DONT SHOW THIS BAR ON THE SPLASH SCREEN
-  if (location.pathname !== "/") {
+  let textFieldLabel = "";
+  if (
+    location.pathname === "/currentUserLists" ||
+    location.pathname === "/allLists"
+  ) {
+    textFieldLabel = "Search for Playlists";
+  } else if (location.pathname === "/userLists") {
+    textFieldLabel = "Search for Users";
+  }
+
+  if (
+    location.pathname !== "/" &&
+    location.pathname !== "/login/" &&
+    location.pathname !== "/register/"
+  ) {
+    // ! WE DONT SHOW THIS BAR ON THE SPLASH SCREEN
     return (
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" style={{ backgroundColor: "black" }}>
@@ -136,7 +150,7 @@ export default function ControlBanner() {
             {/* // ! SEARCH BAR */}
             <TextField
               id="filled-basic"
-              label="Search"
+              label={textFieldLabel}
               variant="filled"
               style={{ backgroundColor: "white" }}
               sx={{ width: "700px" }}

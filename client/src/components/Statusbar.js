@@ -50,13 +50,13 @@ function Statusbar() {
   } else if (location.pathname === "/userLists") {
     return (
       <div id="playlister-statusbar">
-        <Typography variant="h4">{text}</Typography>
+        <Typography variant="h2">Playlists</Typography>
       </div>
     );
   } else if (location.pathname === "/allLists") {
     return (
       <div id="playlister-statusbar">
-        <Typography variant="h4">{text}</Typography>
+        <Typography variant="h2">Playlists</Typography>
       </div>
     );
   } else {
