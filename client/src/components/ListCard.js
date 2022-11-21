@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { GlobalStoreContext } from "../store";
+import AuthContext from "../auth";
 import Box from "@mui/material/Box";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -25,6 +26,8 @@ import { borderRadius } from "@mui/system";
 */
 function ListCard(props) {
   const { store } = useContext(GlobalStoreContext);
+  const { auth } = useContext(AuthContext);
+
   const [editActive, setEditActive] = useState(false);
   const [text, setText] = useState("");
 
@@ -35,6 +38,7 @@ function ListCard(props) {
 
   // ! Use this method to set current list, this will control what is displayed in the video and comments tab
   function handleLoadList(event, id) {
+    event.stopPropagation();
     console.log("handleLoadList for " + id);
     if (!event.target.disabled) {
       let _id = event.target.id;
@@ -45,6 +49,7 @@ function ListCard(props) {
 
       // CHANGE THE CURRENT LIST
       store.setCurrentList(id);
+      console.log("HANO ", store.currentList);
     }
   }
 
@@ -56,31 +61,56 @@ function ListCard(props) {
     return playlist.songs;
   }
 
+  // ! Like and dislike
+
+  function handleLike(event) {
+    event.stopPropagation();
+    store.likeOrDislikeList(list._id, "like", auth.user.username);
+  }
+
+  function handleDislike(event) {
+    event.stopPropagation();
+    store.likeOrDislikeList(list._id, "dislike", auth.user.username);
+  }
+
   // ! Functions for handling all the button inputs in list card
-  function handleAddNewSong() {
+  function handleAddNewSong(event) {
+    event.stopPropagation();
     store.addNewSong();
   }
 
-  function handleUndo() {
+  function handleUndo(event) {
+    event.stopPropagation();
     store.undo();
   }
 
-  function handleRedo() {
+  function handleRedo(event) {
+    event.stopPropagation();
     store.redo();
   }
 
-  function handleClose() {
+  function handleClose(event) {
+    event.stopPropagation();
     store.closeCurrentList();
   }
 
-  function handleDelete() {}
+  function handleDelete(event) {
+    event.stopPropagation();
+  }
 
-  function handlePublish() {}
+  function handlePublish(event) {
+    event.stopPropagation();
+    store.publishList();
+  }
 
-  function handleDuplicate() {}
+  function handleDuplicate(event) {
+    event.stopPropagation();
+    store.duplicatePlaylist();
+  }
 
   // ! Edit playlist name functions
   function handleToggleEdit(event) {
+    event.stopPropagation();
     event.stopPropagation();
     toggleEdit();
   }
@@ -176,19 +206,19 @@ function ListCard(props) {
             <IconButton
               sx={{ fontSize: 40 }}
               style={{ color: "black" }}
-              onClick={console.log("hello")}
+              onClick={(event) => handleLike(event)}
             >
               <ThumbUpIcon sx={{ fontSize: 40 }}></ThumbUpIcon>
-              {list.likes}
+              {list.likes.length}
             </IconButton>
 
             <IconButton
               sx={{ fontSize: 40 }}
               style={{ color: "black" }}
-              pnClick={console.log("hello")}
+              onClick={(event) => handleDislike(event)}
             >
               <ThumbDownAltIcon sx={{ fontSize: 40 }}></ThumbDownAltIcon>
-              {list.dislikes}
+              {list.dislikes.length}
             </IconButton>
           </Box>
         </Box>
@@ -224,7 +254,8 @@ function ListCard(props) {
       </ListItem>
     );
   }
-  // ! ##############################
+
+  // ! ##########################################################################################
   // ! WHEN THE LIST CARD IS EXPANDED
   else {
     let songArray = "";
@@ -288,19 +319,19 @@ function ListCard(props) {
             <IconButton
               sx={{ fontSize: 40 }}
               style={{ color: "black" }}
-              onClick={console.log("hello")}
+              onClick={(event) => handleLike(event)}
             >
               <ThumbUpIcon sx={{ fontSize: 40 }}></ThumbUpIcon>
-              {list.likes}
+              {list.likes.length}
             </IconButton>
 
             <IconButton
               sx={{ fontSize: 40 }}
               style={{ color: "black" }}
-              pnClick={console.log("hello")}
+              pnClick={(event) => handleDislike(event)}
             >
               <ThumbDownAltIcon sx={{ fontSize: 40 }}></ThumbDownAltIcon>
-              {list.dislikes}
+              {list.dislikes.length}
             </IconButton>
           </Box>
         </Box>
@@ -344,7 +375,7 @@ function ListCard(props) {
                 color: "black",
                 fontWeight: "bold",
               }}
-              onClick={handleAddNewSong}
+              onClick={(event) => handleAddNewSong(event)}
             >
               Add
             </Button>
@@ -356,6 +387,7 @@ function ListCard(props) {
                 color: "black",
                 fontWeight: "bold",
               }}
+              onClick={(event) => handleUndo(event)}
             >
               Undo
             </Button>
@@ -366,6 +398,7 @@ function ListCard(props) {
                 color: "black",
                 fontWeight: "bold",
               }}
+              onClick={(event) => handleRedo(event)}
             >
               Redo
             </Button>
@@ -380,7 +413,7 @@ function ListCard(props) {
                 color: "black",
                 fontWeight: "bold",
               }}
-              onClick={handleDeleteList}
+              onClick={(event) => handleDeleteList(event)}
             >
               Delete
             </Button>
@@ -392,6 +425,7 @@ function ListCard(props) {
                 color: "black",
                 fontWeight: "bold",
               }}
+              onClick={(event) => handlePublish(event)}
             >
               Publish
             </Button>
@@ -402,6 +436,7 @@ function ListCard(props) {
                 color: "black",
                 fontWeight: "bold",
               }}
+              onClick={(event) => handleDuplicate(event)}
             >
               Duplicate
             </Button>
@@ -424,7 +459,8 @@ function ListCard(props) {
           <Box>Listens: {list.listens} </Box>
           <Box>
             <IconButton
-              onClick={() => {
+              onClick={(event) => {
+                event.stopPropagation();
                 setExpanded(false);
                 store.closeCurrentList();
               }}

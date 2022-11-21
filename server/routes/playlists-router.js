@@ -15,6 +15,18 @@ router.get("/playlist/:id", auth.verify, PlaylistController.getPlaylistById);
 router.get("/playlistpairs", auth.verify, PlaylistController.getPlaylistPairs);
 router.get("/playlists", auth.verify, PlaylistController.getPlaylists);
 router.put("/playlist/:id", auth.verify, PlaylistController.updatePlaylist);
+
 router.post("/playlist/:id", PlaylistController.addNewComment);
+
+router.put(
+  "/playlist/:id/publish",
+  auth.verify,
+  PlaylistController.publishPlaylist
+);
+
+router.put(
+  "/playlist/:id/likeOrDislike",
+  PlaylistController.likeOrDislikePlaylist
+);
 
 module.exports = router;

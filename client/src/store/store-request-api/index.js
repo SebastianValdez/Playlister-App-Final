@@ -65,6 +65,14 @@ export const getAllPlaylists = () => api.get(`/playlists/`);
 export const addNewComment = (id, playlist) =>
   api.post(`/playlist/${id}`, { playlist: playlist });
 
+export const publishPlaylist = (id) => api.put(`/playlist/${id}/publish`);
+
+export const likeOrDislikePlaylist = (id, likeOrDislike, user) =>
+  api.put(`/playlist/${id}/likeOrDislike`, {
+    likeOrDislike: likeOrDislike,
+    user: user,
+  });
+
 const apis = {
   createPlaylist,
   deletePlaylistById,
@@ -73,6 +81,8 @@ const apis = {
   updatePlaylistById,
   getAllPlaylists,
   addNewComment,
+  publishPlaylist,
+  likeOrDislikePlaylist,
 };
 
 export default apis;

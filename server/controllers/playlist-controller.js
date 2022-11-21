@@ -235,6 +235,76 @@ addNewComment = async (req, res) => {
   );
 };
 
+publishPlaylist = async (req, res) => {
+  const playlist = await Playlist.findOneAndUpdate(
+    { _id: req.params.id },
+    { published: true },
+    (err, playlist) => {
+      if (err) {
+        return res.status(400).json({ success: false, error: err });
+      } else {
+        return res.status(200).json({ success: true, playlist: playlist });
+      }
+    }
+  );
+};
+
+likeOrDislikePlaylist = async (req, res) => {
+  if (req.body.likeOrDislike === "like") {
+    let newLikes = [];
+
+    let playlist = await Playlist.findById({ _id: req.params.id });
+
+    newLikes = playlist.likes;
+
+    if (newLikes.includes(req.body.user)) {
+      let index = newLikes.indexOf(req.body.user);
+      if (index > -1) newLikes.splice(index, 1);
+    } else {
+      newLikes.push(req.body.user);
+    }
+
+    if (!playlist.dislikes.includes(req.body.user)) {
+      playlist = await Playlist.findOneAndUpdate(
+        { _id: req.params.id },
+        { likes: newLikes },
+        (err, playlist) => {
+          if (err) {
+            return res.status(400).json({ success: false, error: err });
+          } else {
+            return res.status(200).json({ success: true, playlist: playlist });
+          }
+        }
+      );
+    }
+  } else {
+    let playlist = await Playlist.findById({ _id: req.params.id });
+
+    newDislikes = playlist.dislikes;
+
+    if (newDislikes.includes(req.body.user)) {
+      let index = newDislikes.indexOf(req.body.user);
+      if (index > -1) newDislikes.splice(index, 1);
+    } else {
+      newDislikes.push(req.body.user);
+    }
+
+    if (!playlist.likes.includes(req.body.user)) {
+      playlist = await Playlist.findOneAndUpdate(
+        { _id: req.params.id },
+        { dislikes: newDislikes },
+        (err, playlist) => {
+          if (err) {
+            return res.status(400).json({ success: false, error: err });
+          } else {
+            return res.status(200).json({ success: true, playlist: playlist });
+          }
+        }
+      );
+    }
+  }
+};
+
 module.exports = {
   createPlaylist,
   deletePlaylist,
@@ -243,4 +313,6 @@ module.exports = {
   getPlaylists,
   updatePlaylist,
   addNewComment,
+  publishPlaylist,
+  likeOrDislikePlaylist,
 };

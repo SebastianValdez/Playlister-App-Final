@@ -34,6 +34,9 @@ export const GlobalStoreActionType = {
   UNMARK_LIST_FOR_DELETION: "UNMARK_LIST_FOR_DELETION",
   LOAD_ALL_PLAYLISTS: "LOAD_ALL_PLAYLISTS",
   ADD_NEW_COMMENT: "ADD_NEW_COMMENT",
+  PUBLISH_PLAYLIST: "PUBLISH_PLAYLIST",
+  LIKE_OR_DISLIKE_PLAYLIST: "LIKE_OR_DISLIKE_PLAYLIST",
+  DUPLICATE_PLAYLIST: "DUPLICATE_PLAYLIST",
 };
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -265,6 +268,49 @@ function GlobalStoreContextProvider(props) {
           listMarkedForDeletion: null,
         });
       }
+      case GlobalStoreActionType.PUBLISH_PLAYLIST: {
+        return setStore({
+          currentModal: CurrentModal.NONE,
+          idNamePairs: store.idNamePairs,
+          playlistsArray: store.playlistsArray,
+          currentList: store.currentList,
+          currentSongIndex: -1,
+          currentSong: store.currentSong,
+          newListCounter: store.newListCounter,
+          listNameActive: false,
+          listIdMarkedForDeletion: null,
+          listMarkedForDeletion: null,
+        });
+      }
+      case GlobalStoreActionType.LIKE_OR_DISLIKE_PLAYLIST: {
+        return setStore({
+          currentModal: CurrentModal.NONE,
+          idNamePairs: store.idNamePairs,
+          playlistsArray: store.playlistsArray,
+          currentList: store.currentList,
+          currentSongIndex: -1,
+          currentSong: store.currentSong,
+          newListCounter: store.newListCounter,
+          listNameActive: false,
+          listIdMarkedForDeletion: null,
+          listMarkedForDeletion: null,
+        });
+      }
+      case GlobalStoreActionType.DUPLICATE_PLAYLIST: {
+        return setStore({
+          currentModal: CurrentModal.NONE,
+          idNamePairs: store.idNamePairs,
+          playlistsArray: store.playlistsArray,
+          currentList: store.currentList,
+          currentSongIndex: -1,
+          currentSong: store.currentSong,
+          newListCounter: store.newListCounter,
+          listNameActive: false,
+          listIdMarkedForDeletion: null,
+          listMarkedForDeletion: null,
+        });
+      }
+
       default:
         return store;
     }
@@ -325,8 +371,8 @@ function GlobalStoreContextProvider(props) {
       [],
       auth.user.email,
       auth.user.username,
-      0,
-      0,
+      [],
+      [],
       0,
       [],
       false
@@ -552,6 +598,69 @@ function GlobalStoreContextProvider(props) {
     }
 
     asyncAddComment(user, comment);
+  };
+
+  // ! Publishes the current list
+  store.publishList = () => {
+    async function asyncPublishPlaylist() {
+      const response = await api.publishPlaylist(store.currentList._id);
+      if (response.data.success) {
+        storeReducer({
+          type: GlobalStoreActionType.PUBLISH_PLAYLIST,
+          payload: null,
+        });
+      } else {
+        console.log("FAILED TO PUBLISH PLAYLIST");
+      }
+    }
+    asyncPublishPlaylist();
+  };
+
+  // ! Likes or Dislikes a list
+  store.likeOrDislikeList = (listId, likeOrDislike, user) => {
+    async function asyncLikeOrDislike(listId, likeOrDislike, user) {
+      const response = await api.likeOrDislikePlaylist(
+        listId,
+        likeOrDislike,
+        user
+      );
+      if (response.data.success) {
+        storeReducer({
+          type: GlobalStoreActionType.LIKE_OR_DISLIKE_PLAYLIST,
+          payload: null,
+        });
+      } else {
+        console.log("FAILED TO LIKE/DISLIKE PLAYLIST");
+      }
+    }
+    asyncLikeOrDislike(listId, likeOrDislike, user);
+  };
+
+  // ! Duplicates a playlist
+  store.duplicatePlaylist = () => {
+    async function asyncDuplicatePlaylist() {
+      let newListName = "Copy of " + store.currentList.name;
+      const response = await api.createPlaylist(
+        newListName,
+        store.currentList.songs,
+        auth.user.email,
+        auth.user.username,
+        [],
+        [],
+        0,
+        [],
+        false
+      );
+      if (response.data.success) {
+        storeReducer({
+          type: GlobalStoreActionType.DUPLICATE_PLAYLIST,
+          payload: null,
+        });
+      } else {
+        console.log("FAILED TO DUPLICATE PLAYLIST");
+      }
+    }
+    asyncDuplicatePlaylist();
   };
 
   // ! Gets every playlist, not in some dumb pair format
