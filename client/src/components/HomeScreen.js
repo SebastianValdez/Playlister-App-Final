@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 
 import ListCard from "./ListCard.js";
 import MUIDeleteModal from "./MUIDeleteModal";
+import MUIRemoveSongModal from "./MUIRemoveSongModal";
+import MUIEditSongModal from "./MUIEditSongModal";
 import VideoPlayer from "./VideoPlayer";
 import Comments from "./Comments";
 
@@ -52,6 +54,13 @@ const HomeScreen = () => {
         ))}
       </List>
     );
+  }
+
+  let modalJSX = "";
+  if (store.isEditSongModalOpen()) {
+    modalJSX = <MUIEditSongModal />;
+  } else if (store.isRemoveSongModalOpen()) {
+    modalJSX = <MUIRemoveSongModal />;
   }
 
   if (auth.user === "guest") {
@@ -110,6 +119,7 @@ const HomeScreen = () => {
           </div>
           {videoOrComment === "video" ? <VideoPlayer /> : <Comments />}
         </div>
+        {modalJSX}
       </div>
     );
   }

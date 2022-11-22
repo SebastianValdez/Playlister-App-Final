@@ -81,7 +81,7 @@ function SongCard(props) {
       </div>
     );
   } else {
-    // Bolded version of the yello => #cd7e39
+    // Bolded version of the yello =>#cd7e39
     return (
       <Box
         sx={{ display: "flex", flexDirection: "row" }}

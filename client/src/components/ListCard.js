@@ -131,6 +131,7 @@ function ListCard(props) {
   }
 
   function handleKeyPress(event) {
+    event.stopPropagation();
     if (event.code === "Enter") {
       let id = event.target.id.substring("list-".length);
       store.changeListName(id, text);
@@ -138,6 +139,7 @@ function ListCard(props) {
     }
   }
   function handleUpdateText(event) {
+    event.stopPropagation();
     setText(event.target.value);
   }
 
@@ -202,24 +204,32 @@ function ListCard(props) {
               justifyContent: "space-between",
             }}
           >
-            {list.published.isPublished ? (
+            {auth.user !== "guest" ? (
               <>
-                <IconButton
-                  sx={{ fontSize: 40 }}
-                  style={{ color: "black" }}
-                  onClick={(event) => handleLike(event)}
-                >
-                  <ThumbUpIcon sx={{ fontSize: 40 }}></ThumbUpIcon>
-                  {list.likes.length}
-                </IconButton>
-                <IconButton
-                  sx={{ fontSize: 40 }}
-                  style={{ color: "black" }}
-                  onClick={(event) => handleDislike(event)}
-                >
-                  <ThumbDownAltIcon sx={{ fontSize: 40 }}></ThumbDownAltIcon>
-                  {list.dislikes.length}
-                </IconButton>
+                {list.published.isPublished ? (
+                  <>
+                    <IconButton
+                      sx={{ fontSize: 40 }}
+                      style={{ color: "black" }}
+                      onClick={(event) => handleLike(event)}
+                    >
+                      <ThumbUpIcon sx={{ fontSize: 40 }}></ThumbUpIcon>
+                      {list.likes.length}
+                    </IconButton>
+                    <IconButton
+                      sx={{ fontSize: 40 }}
+                      style={{ color: "black" }}
+                      onClick={(event) => handleDislike(event)}
+                    >
+                      <ThumbDownAltIcon
+                        sx={{ fontSize: 40 }}
+                      ></ThumbDownAltIcon>
+                      {list.dislikes.length}
+                    </IconButton>
+                  </>
+                ) : (
+                  ""
+                )}
               </>
             ) : (
               ""
@@ -242,14 +252,22 @@ function ListCard(props) {
         >
           {list.published.isPublished ? (
             <>
-              <Box>
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
                 Published:{" "}
-                {new Date(list.published.publishedDate).toLocaleDateString(
-                  "en-US",
-                  { year: "numeric", month: "long", day: "numeric" }
-                )}{" "}
+                <Box style={{ color: "green" }} sx={{ pl: "5px" }}>
+                  {new Date(list.published.publishedDate).toLocaleDateString(
+                    "en-US",
+                    { year: "numeric", month: "long", day: "numeric" }
+                  )}
+                </Box>{" "}
               </Box>
-              <Box>Listens: {list.listens} </Box>
+
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                Listens:{" "}
+                <Box style={{ color: "red" }} sx={{ pl: "5px" }}>
+                  {list.listens}
+                </Box>{" "}
+              </Box>
             </>
           ) : (
             <>
@@ -260,6 +278,7 @@ function ListCard(props) {
           <Box>
             <IconButton
               onClick={(event) => {
+                event.stopPropagation();
                 setExpanded(true);
                 handleLoadList(event, list._id);
               }}
@@ -340,24 +359,32 @@ function ListCard(props) {
               justifyContent: "space-between",
             }}
           >
-            {list.published.isPublished ? (
+            {auth.user !== "guest" ? (
               <>
-                <IconButton
-                  sx={{ fontSize: 40 }}
-                  style={{ color: "black" }}
-                  onClick={(event) => handleLike(event)}
-                >
-                  <ThumbUpIcon sx={{ fontSize: 40 }}></ThumbUpIcon>
-                  {list.likes.length}
-                </IconButton>
-                <IconButton
-                  sx={{ fontSize: 40 }}
-                  style={{ color: "black" }}
-                  onClick={(event) => handleDislike(event)}
-                >
-                  <ThumbDownAltIcon sx={{ fontSize: 40 }}></ThumbDownAltIcon>
-                  {list.dislikes.length}
-                </IconButton>
+                {list.published.isPublished ? (
+                  <>
+                    <IconButton
+                      sx={{ fontSize: 40 }}
+                      style={{ color: "black" }}
+                      onClick={(event) => handleLike(event)}
+                    >
+                      <ThumbUpIcon sx={{ fontSize: 40 }}></ThumbUpIcon>
+                      {list.likes.length}
+                    </IconButton>
+                    <IconButton
+                      sx={{ fontSize: 40 }}
+                      style={{ color: "black" }}
+                      onClick={(event) => handleDislike(event)}
+                    >
+                      <ThumbDownAltIcon
+                        sx={{ fontSize: 40 }}
+                      ></ThumbDownAltIcon>
+                      {list.dislikes.length}
+                    </IconButton>
+                  </>
+                ) : (
+                  ""
+                )}
               </>
             ) : (
               ""
@@ -395,8 +422,52 @@ function ListCard(props) {
             justifyContent: "space-between",
           }}
         >
-          {!list.published.isPublished ? (
+          {auth.user !== "guest" ? (
             <>
+              {!list.published.isPublished ? (
+                <>
+                  <Box>
+                    <Button
+                      variant="contained"
+                      sx={{ mr: 2 }}
+                      style={{
+                        backgroundColor: "lightgrey",
+                        color: "black",
+                        fontWeight: "bold",
+                      }}
+                      onClick={(event) => handleAddNewSong(event)}
+                    >
+                      Add
+                    </Button>
+                    <Button
+                      variant="contained"
+                      sx={{ mr: 2 }}
+                      style={{
+                        backgroundColor: "lightgrey",
+                        color: "black",
+                        fontWeight: "bold",
+                      }}
+                      onClick={(event) => handleUndo(event)}
+                    >
+                      Undo
+                    </Button>
+                    <Button
+                      variant="contained"
+                      style={{
+                        backgroundColor: "lightgrey",
+                        color: "black",
+                        fontWeight: "bold",
+                      }}
+                      onClick={(event) => handleRedo(event)}
+                    >
+                      Redo
+                    </Button>
+                  </Box>
+                </>
+              ) : (
+                <Box></Box>
+              )}
+
               <Box>
                 <Button
                   variant="contained"
@@ -406,84 +477,50 @@ function ListCard(props) {
                     color: "black",
                     fontWeight: "bold",
                   }}
-                  onClick={(event) => handleAddNewSong(event)}
+                  onClick={(event) => handleDeleteList(event)}
                 >
-                  Add
+                  Delete
                 </Button>
+
+                {!list.published.isPublished ? (
+                  <>
+                    <Button
+                      variant="contained"
+                      sx={{ mr: 2 }}
+                      style={{
+                        backgroundColor: "lightgrey",
+                        color: "black",
+                        fontWeight: "bold",
+                      }}
+                      onClick={(event) => handlePublish(event)}
+                    >
+                      Publish
+                    </Button>
+                  </>
+                ) : (
+                  ""
+                )}
+
                 <Button
                   variant="contained"
-                  sx={{ mr: 2 }}
                   style={{
                     backgroundColor: "lightgrey",
                     color: "black",
                     fontWeight: "bold",
                   }}
-                  onClick={(event) => handleUndo(event)}
-                >
-                  Undo
-                </Button>
-                <Button
-                  variant="contained"
-                  style={{
-                    backgroundColor: "lightgrey",
-                    color: "black",
-                    fontWeight: "bold",
+                  onClick={(event) => {
+                    handleDuplicate(event);
                   }}
-                  onClick={(event) => handleRedo(event)}
                 >
-                  Redo
+                  Duplicate
                 </Button>
               </Box>
             </>
           ) : (
-            <Box></Box>
+            <>
+              <Box></Box>
+            </>
           )}
-
-          <Box>
-            <Button
-              variant="contained"
-              sx={{ mr: 2 }}
-              style={{
-                backgroundColor: "lightgrey",
-                color: "black",
-                fontWeight: "bold",
-              }}
-              onClick={(event) => handleDeleteList(event)}
-            >
-              Delete
-            </Button>
-
-            {!list.published.isPublished ? (
-              <>
-                <Button
-                  variant="contained"
-                  sx={{ mr: 2 }}
-                  style={{
-                    backgroundColor: "lightgrey",
-                    color: "black",
-                    fontWeight: "bold",
-                  }}
-                  onClick={(event) => handlePublish(event)}
-                >
-                  Publish
-                </Button>
-              </>
-            ) : (
-              ""
-            )}
-
-            <Button
-              variant="contained"
-              style={{
-                backgroundColor: "lightgrey",
-                color: "black",
-                fontWeight: "bold",
-              }}
-              onClick={(event) => handleDuplicate(event)}
-            >
-              Duplicate
-            </Button>
-          </Box>
         </Box>
 
         {/* // ! THE BOTTOM CONTAINER, HOLDS THE PUBLISHED, LISTENS, AND EXPANSION BUTTON */}
@@ -500,14 +537,22 @@ function ListCard(props) {
         >
           {list.published.isPublished ? (
             <>
-              <Box>
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
                 Published:{" "}
-                {new Date(list.published.publishedDate).toLocaleDateString(
-                  "en-US",
-                  { year: "numeric", month: "long", day: "numeric" }
-                )}{" "}
+                <Box style={{ color: "green" }} sx={{ pl: "5px" }}>
+                  {new Date(list.published.publishedDate).toLocaleDateString(
+                    "en-US",
+                    { year: "numeric", month: "long", day: "numeric" }
+                  )}
+                </Box>{" "}
               </Box>
-              <Box>Listens: {list.listens} </Box>
+
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                Listens:{" "}
+                <Box style={{ color: "red" }} sx={{ pl: "5px" }}>
+                  {list.listens}
+                </Box>{" "}
+              </Box>
             </>
           ) : (
             <>
