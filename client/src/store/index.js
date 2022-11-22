@@ -128,7 +128,7 @@ function GlobalStoreContextProvider(props) {
         return setStore({
           currentModal: CurrentModal.NONE,
           idNamePairs: payload,
-          playlistsArray: null,
+          playlistsArray: store.playlistsArray,
           currentList: null,
           currentSongIndex: -1,
           currentSong: null,
@@ -634,6 +634,7 @@ function GlobalStoreContextProvider(props) {
       }
     }
     asyncLikeOrDislike(listId, likeOrDislike, user);
+    store.loadIdNamePairs();
   };
 
   // ! Duplicates a playlist

@@ -61,8 +61,9 @@ const HomeScreen = () => {
     modalJSX = <MUIEditSongModal />;
   } else if (store.isRemoveSongModalOpen()) {
     modalJSX = <MUIRemoveSongModal />;
+  } else if (store.isDeleteListModalOpen()) {
+    modalJSX = <MUIDeleteModal />;
   }
-
   if (auth.user === "guest") {
     return (
       <div id="playlist-selector">
@@ -95,10 +96,7 @@ const HomeScreen = () => {
   } else {
     return (
       <div id="playlist-selector">
-        <div id="list-selector-list">
-          {listCard}
-          <MUIDeleteModal />
-        </div>
+        <div id="list-selector-list">{listCard}</div>
         <div id="youtube-comment-component">
           <div id="video-comments-buttons">
             <Button
