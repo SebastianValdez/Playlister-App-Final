@@ -238,7 +238,7 @@ addNewComment = async (req, res) => {
 publishPlaylist = async (req, res) => {
   const playlist = await Playlist.findOneAndUpdate(
     { _id: req.params.id },
-    { published: true },
+    { published: { isPublished: true, publishedDate: new Date() } },
     (err, playlist) => {
       if (err) {
         return res.status(400).json({ success: false, error: err });
