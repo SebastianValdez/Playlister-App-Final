@@ -52,20 +52,20 @@ export default function ControlBanner() {
       open={isMenuOpen}
       onClose={handleSortListsMenuClose}
     >
-      <MenuItem onClick={handleSortListsMenuClose}>
-        <Link to="">Name (A - Z)</Link>
+      <MenuItem onClick={() => store.setSortType("name")}>
+        Name (A - Z)
       </MenuItem>
-      <MenuItem onClick={handleSortListsMenuClose}>
-        <Link to="">Publish Date (Newest)</Link>
+      <MenuItem onClick={() => store.setSortType("publish date")}>
+        Publish Date (Newest)
       </MenuItem>
-      <MenuItem onClick={handleSortListsMenuClose}>
-        <Link to="">Listens (High - Low)</Link>
+      <MenuItem onClick={() => store.setSortType("listens")}>
+        Listens (High - Low)
       </MenuItem>
-      <MenuItem onClick={handleSortListsMenuClose}>
-        <Link to="">Likes (High - Low)</Link>
+      <MenuItem onClick={() => store.setSortType("likes")}>
+        Likes (High - Low)
       </MenuItem>
-      <MenuItem onClick={handleSortListsMenuClose}>
-        <Link to="">Dislikes (High - Low)</Link>
+      <MenuItem onClick={() => store.setSortType("dislikes")}>
+        Dislikes (High - Low)
       </MenuItem>
     </Menu>
   );

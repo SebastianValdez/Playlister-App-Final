@@ -45,6 +45,10 @@ const HomeScreen = () => {
     );
   }
 
+  if (store.sortType !== "") {
+    listArray = store.sortLists(listArray);
+  }
+
   let listCard = "";
   if (store) {
     listCard = (

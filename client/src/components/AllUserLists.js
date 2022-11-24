@@ -36,11 +36,19 @@ const HomeScreen = () => {
     store.getAllPlaylists();
   }, []);
 
+  let listArray = store.playlistsArray.filter(
+    (list) => list.published.isPublished
+  );
+
+  if (store.sortType !== "") {
+    listArray = store.sortLists(listArray);
+  }
+
   let listCard = "";
   if (store) {
     listCard = (
       <List sx={{ width: "90%", left: "5%", bgcolor: "mint" }}>
-        {store.playlistsArray.map((list) => (
+        {listArray.map((list) => (
           <ListCard key={list._id} list={list} selected={false} />
         ))}
       </List>

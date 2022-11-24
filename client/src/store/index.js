@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import jsTPS from "../common/jsTPS";
 import api from "./store-request-api";
@@ -37,6 +37,7 @@ export const GlobalStoreActionType = {
   PUBLISH_PLAYLIST: "PUBLISH_PLAYLIST",
   LIKE_OR_DISLIKE_PLAYLIST: "LIKE_OR_DISLIKE_PLAYLIST",
   DUPLICATE_PLAYLIST: "DUPLICATE_PLAYLIST",
+  SET_SORT_TYPE: "SET_SORT_TYPE",
 };
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -64,6 +65,7 @@ function GlobalStoreContextProvider(props) {
     listNameActive: false,
     listIdMarkedForDeletion: null,
     listMarkedForDeletion: null,
+    sortType: null,
   });
   const history = useHistory();
 
@@ -91,6 +93,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       // STOP EDITING THE CURRENT LIST
@@ -106,6 +109,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       // CREATE A NEW LIST
@@ -121,6 +125,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -136,6 +141,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       // PREPARE TO DELETE A LIST
@@ -151,6 +157,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: payload.id,
           listMarkedForDeletion: payload.playlist,
+          sortType: store.sortType,
         });
       }
       // UPDATE A LIST
@@ -166,6 +173,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       // START EDITING A LIST NAME
@@ -181,6 +189,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: true,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       //
@@ -196,6 +205,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       case GlobalStoreActionType.REMOVE_SONG: {
@@ -210,6 +220,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       case GlobalStoreActionType.HIDE_MODALS: {
@@ -224,6 +235,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       case GlobalStoreActionType.UNMARK_LIST_FOR_DELETION: {
@@ -238,6 +250,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       case GlobalStoreActionType.LOAD_ALL_PLAYLISTS: {
@@ -252,6 +265,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       case GlobalStoreActionType.ADD_NEW_COMMENT: {
@@ -266,6 +280,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       case GlobalStoreActionType.PUBLISH_PLAYLIST: {
@@ -280,6 +295,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       case GlobalStoreActionType.LIKE_OR_DISLIKE_PLAYLIST: {
@@ -294,6 +310,7 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
       case GlobalStoreActionType.DUPLICATE_PLAYLIST: {
@@ -308,9 +325,24 @@ function GlobalStoreContextProvider(props) {
           listNameActive: false,
           listIdMarkedForDeletion: null,
           listMarkedForDeletion: null,
+          sortType: store.sortType,
         });
       }
-
+      case GlobalStoreActionType.SET_SORT_TYPE: {
+        return setStore({
+          currentModal: CurrentModal.NONE,
+          idNamePairs: store.idNamePairs,
+          playlistsArray: store.playlistsArray,
+          currentList: store.currentList,
+          currentSongIndex: -1,
+          currentSong: store.currentSong,
+          newListCounter: store.newListCounter,
+          listNameActive: false,
+          listIdMarkedForDeletion: null,
+          listMarkedForDeletion: null,
+          sortType: payload,
+        });
+      }
       default:
         return store;
     }
@@ -383,11 +415,11 @@ function GlobalStoreContextProvider(props) {
       let newList = response.data.playlist;
       storeReducer({
         type: GlobalStoreActionType.CREATE_NEW_LIST,
-        payload: newList,
+        payload: null,
       });
 
       // IF IT'S A VALID LIST THEN LET'S START EDITING IT
-      history.push("/currentUserLists");
+      // history.push("/currentUserLists");
       store.getAllPlaylists();
     } else {
       console.log("API FAILED TO CREATE A NEW LIST");
@@ -634,7 +666,7 @@ function GlobalStoreContextProvider(props) {
       }
     }
     asyncLikeOrDislike(listId, likeOrDislike, user);
-    store.loadIdNamePairs();
+    let list = store.currentList;
   };
 
   // ! Duplicates a playlist
@@ -654,9 +686,10 @@ function GlobalStoreContextProvider(props) {
       );
       if (response.data.success) {
         storeReducer({
-          type: GlobalStoreActionType.DUPLICATE_PLAYLIST,
+          type: GlobalStoreActionType.CREATE_NEW_LIST,
           payload: null,
         });
+        store.getAllPlaylists();
       } else {
         console.log("FAILED TO DUPLICATE PLAYLIST");
       }
@@ -685,6 +718,56 @@ function GlobalStoreContextProvider(props) {
       }
     }
     asyncAllLists();
+  };
+
+  store.setCurrentListNoAuth = function (list) {
+    async function asyncUpdateCurrentList(list) {
+      storeReducer({
+        type: GlobalStoreActionType.SET_CURRENT_LIST,
+        payload: list,
+      });
+    }
+    asyncUpdateCurrentList(list);
+  };
+
+  // ! Change how we sort the lists
+  store.setSortType = function (type) {
+    storeReducer({
+      type: GlobalStoreActionType.SET_SORT_TYPE,
+      payload: type,
+    });
+  };
+
+  // ! Sort the lists
+  store.sortLists = function (list) {
+    if (store.sortType == "name") {
+      list.sort((a, b) =>
+        a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      );
+    } else if (store.sortType == "creation date") {
+      list.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    } else if (store.sortType == "update date") {
+      list.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+    }
+
+    // ! Use the published list for the fields that only relate to the published versions
+
+    // let publishedList = list.filter((list) => list.published.isPublished);
+    if (store.sortType == "publish date") {
+      list.sort(
+        (a, b) =>
+          new Date(a.published.publishedDate) -
+          new Date(b.published.publishedDate)
+      );
+    } else if (store.sortType == "listens") {
+      list.sort((a, b) => a.listens - b.listens);
+    } else if (store.sortType == "likes") {
+      list.sort((a, b) => a.likes.length - b.likes.length);
+    } else if (store.sortType == "dislikes") {
+      list.sort((a, b) => a.dislikes.length - b.dislikes.length);
+    }
+
+    return list;
   };
 
   // THIS FUNCDTION ADDS A CreateSong_Transaction TO THE TRANSACTION STACK
