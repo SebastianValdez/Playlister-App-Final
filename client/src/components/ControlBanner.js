@@ -26,6 +26,7 @@ export default function ControlBanner() {
   const { store } = useContext(GlobalStoreContext);
   const location = useLocation();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [text, setText] = useState("");
   const isMenuOpen = Boolean(anchorEl);
 
   const handleSortListsMenuOpen = (event) => {
@@ -36,39 +37,80 @@ export default function ControlBanner() {
     setAnchorEl(null);
   };
 
-  const sortListsMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      // id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleSortListsMenuClose}
-    >
-      <MenuItem onClick={() => store.setSortType("name")}>
-        Name (A - Z)
-      </MenuItem>
-      <MenuItem onClick={() => store.setSortType("publish date")}>
-        Publish Date (Newest)
-      </MenuItem>
-      <MenuItem onClick={() => store.setSortType("listens")}>
-        Listens (High - Low)
-      </MenuItem>
-      <MenuItem onClick={() => store.setSortType("likes")}>
-        Likes (High - Low)
-      </MenuItem>
-      <MenuItem onClick={() => store.setSortType("dislikes")}>
-        Dislikes (High - Low)
-      </MenuItem>
-    </Menu>
-  );
+  function handleKeyPress(event) {
+    if (event.code === "Enter") {
+      store.setSearchFilter(text);
+    }
+  }
+
+  function handleUpdateText(event) {
+    setText(event.target.value);
+  }
+
+  let sortListsMenu = "";
+  if (location.pathname == "/currentUserLists") {
+    sortListsMenu = (
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        // id={menuId}
+        keepMounted
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={isMenuOpen}
+        onClose={handleSortListsMenuClose}
+      >
+        <MenuItem onClick={() => store.setSortType("name")}>
+          By Creation Date (Old - New)
+        </MenuItem>
+        <MenuItem onClick={() => store.setSortType("publish date")}>
+          By Last Edit Date (New - Old)
+        </MenuItem>
+        <MenuItem onClick={() => store.setSortType("name")}>
+          By Name (A - Z)
+        </MenuItem>
+      </Menu>
+    );
+  } else {
+    sortListsMenu = (
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        // id={menuId}
+        keepMounted
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={isMenuOpen}
+        onClose={handleSortListsMenuClose}
+      >
+        <MenuItem onClick={() => store.setSortType("name")}>
+          Name (A - Z)
+        </MenuItem>
+        <MenuItem onClick={() => store.setSortType("publish date")}>
+          Publish Date (Newest)
+        </MenuItem>
+        <MenuItem onClick={() => store.setSortType("listens")}>
+          Listens (High - Low)
+        </MenuItem>
+        <MenuItem onClick={() => store.setSortType("likes")}>
+          Likes (High - Low)
+        </MenuItem>
+        <MenuItem onClick={() => store.setSortType("dislikes")}>
+          Dislikes (High - Low)
+        </MenuItem>
+      </Menu>
+    );
+  }
 
   let textFieldLabel = "";
   if (
@@ -154,6 +196,8 @@ export default function ControlBanner() {
               variant="filled"
               style={{ backgroundColor: "white" }}
               sx={{ width: "700px" }}
+              onKeyPress={handleKeyPress}
+              onChange={handleUpdateText}
             />
 
             {/* // ! SORT MENU */}

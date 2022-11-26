@@ -36,22 +36,23 @@ const HomeScreen = () => {
     store.getAllPlaylists();
   }, []);
 
+  let listArray = store.playlistsArray.filter(
+    (list) => list.published.isPublished
+  );
+
+  if (store && store.searchFilter !== "") {
+    listArray = store.searchWithFilter("/userLists", listArray);
+  }
+
   let listCard = "";
   if (store) {
     listCard = (
       <List sx={{ width: "90%", left: "5%", bgcolor: "mint" }}>
-        {store.playlistsArray.map((list) => (
+        {listArray.map((list) => (
           <ListCard key={list._id} list={list} selected={false} />
         ))}
       </List>
     );
-  }
-
-  let modalJSX = "";
-  if (store.isEditSongModalOpen()) {
-    modalJSX = <MUIEditSongModal />;
-  } else if (store.isRemoveSongModalOpen()) {
-    modalJSX = <MUIRemoveSongModal />;
   }
 
   return (
@@ -80,7 +81,6 @@ const HomeScreen = () => {
         </div>
         {videoOrComment === "video" ? <VideoPlayer /> : <Comments />}
       </div>
-      {modalJSX}
     </div>
   );
 };

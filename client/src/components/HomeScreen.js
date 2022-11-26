@@ -68,6 +68,7 @@ const HomeScreen = () => {
   } else if (store.isDeleteListModalOpen()) {
     modalJSX = <MUIDeleteModal />;
   }
+
   if (auth.user === "guest") {
     return (
       <div id="playlist-selector">

@@ -40,8 +40,12 @@ const HomeScreen = () => {
     (list) => list.published.isPublished
   );
 
-  if (store.sortType !== "") {
+  if (store && store.sortType !== "") {
     listArray = store.sortLists(listArray);
+  }
+
+  if (store && store.searchFilter !== "") {
+    listArray = store.searchWithFilter("/allLists", listArray);
   }
 
   let listCard = "";
@@ -53,13 +57,6 @@ const HomeScreen = () => {
         ))}
       </List>
     );
-  }
-
-  let modalJSX = "";
-  if (store.isEditSongModalOpen()) {
-    modalJSX = <MUIEditSongModal />;
-  } else if (store.isRemoveSongModalOpen()) {
-    modalJSX = <MUIRemoveSongModal />;
   }
 
   return (
@@ -88,7 +85,6 @@ const HomeScreen = () => {
         </div>
         {videoOrComment === "video" ? <VideoPlayer /> : <Comments />}
       </div>
-      {modalJSX}
     </div>
   );
 };
