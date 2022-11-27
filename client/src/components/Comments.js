@@ -25,8 +25,8 @@ export default function Comments() {
 
   let commentsArray = "";
 
-  if (store.currentList) {
-    commentsArray = store.currentList.comments.map((comment) => (
+  if (store.selectedList) {
+    commentsArray = store.selectedList.comments.map((comment) => (
       <CommentCard key={"comment by-" + comment.author} comment={comment} />
     ));
   }

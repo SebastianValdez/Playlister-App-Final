@@ -15,8 +15,24 @@ export default function VideoPlayer() {
   const { store } = useContext(GlobalStoreContext);
 
   let player = "";
-  let playlist = ["2g811Eo7K8U", "_nBlN9yp9R8", "ZaDnHo3LdmA"];
+  let playlist = [];
   let currentSong = 0;
+
+  let list = "";
+  let listName = "";
+  let songTitle = "";
+  let songArtist = "";
+  if (store.selectedList) {
+    list = store.selectedList;
+    listName = list.name;
+    songTitle = list.songs[currentSong].title;
+    songArtist = list.songs[currentSong].artist;
+  }
+
+  if (store.selectedList) {
+    playlist = store.selectedList.songs.map((song) => song.youTubeId);
+    console.log("HANO, " + JSON.stringify(store.selectedList));
+  }
 
   // THIS FUNCTION LOADS THE CURRENT SONG INTO
   // THE PLAYER AND PLAYS IT
@@ -104,10 +120,10 @@ export default function VideoPlayer() {
       <div id="now-playing">Now Playing</div>
 
       <div id="youtube-song-info">
-        <span>Playlist:</span>
-        <span>Song:</span>
-        <span>Title:</span>
-        <span>Artist:</span>
+        <span>Playlist: {listName} </span>
+        <span>Song #: {store.selectedList ? currentSong + 1 : ""} </span>
+        <span>Title: {songTitle} </span>
+        <span>Artist: {songArtist} </span>
       </div>
       <div id="video-controls">
         <Box

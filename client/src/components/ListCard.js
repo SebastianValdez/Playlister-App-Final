@@ -53,6 +53,11 @@ function ListCard(props) {
     }
   }
 
+  function handleClickList(event, id) {
+    event.stopPropagation();
+    store.setClickedList(id);
+  }
+
   // ! Use this method to get the songs of a list, we will display these in the list card
   function handleLoadSongs() {
     let playlist = store.playlistsArray.filter(
@@ -173,6 +178,9 @@ function ListCard(props) {
           flexDirection: "column",
         }}
         style={{ width: "100%" }}
+        onClick={(event) => {
+          handleClickList(event, list._id);
+        }}
       >
         {/* // ! THE TOP CONTAINER, HOLDS THE TITLE, AUTHOUR, AND LIKE AND DISLIKE */}
         <Box
