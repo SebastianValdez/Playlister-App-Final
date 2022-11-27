@@ -17,6 +17,7 @@ import MUILoginAlertModal from "./MUILoginAlertModal";
 import AllUserLists from "./AllUserLists";
 import OneUserLists from "./OneUserLists";
 import Comments from "./Comments";
+import VideoPlayer from "./VideoPlayer";
 
 /*
     This serves as a module so that we can import
@@ -44,4 +45,5 @@ export {
   AllUserLists,
   OneUserLists,
   Comments,
+  VideoPlayer,
 };

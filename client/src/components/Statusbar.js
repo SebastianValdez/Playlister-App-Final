@@ -22,9 +22,7 @@ function Statusbar() {
   }
 
   let text = "";
-  if (store.currentList) {
-    text = store.currentList.name;
-  } else {
+  if (location.pathname === "/currentUserLists") {
     text = (
       <div id="list-selector-heading">
         <Fab
@@ -37,6 +35,10 @@ function Statusbar() {
         <Typography variant="h2">Your Lists</Typography>
       </div>
     );
+  } else if (location.pathname === "/userLists") {
+    text = store.searchFilter = "'s";
+  } else {
+    text = store.searchFilter;
   }
 
   if (auth.user === "guest") text = "";
@@ -50,13 +52,13 @@ function Statusbar() {
   } else if (location.pathname === "/userLists") {
     return (
       <div id="playlister-statusbar">
-        <Typography variant="h2">Playlists</Typography>
+        <Typography variant="h2">{text} Lists</Typography>
       </div>
     );
   } else if (location.pathname === "/allLists") {
     return (
       <div id="playlister-statusbar">
-        <Typography variant="h2">Playlists</Typography>
+        <Typography variant="h2">{text} Playlists</Typography>
       </div>
     );
   } else {

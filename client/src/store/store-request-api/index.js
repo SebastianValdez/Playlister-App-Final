@@ -73,6 +73,8 @@ export const likeOrDislikePlaylist = (id, likeOrDislike, user) =>
     user: user,
   });
 
+export const listenToList = (id) => api.put(`/playlist/${id}/addListen`);
+
 const apis = {
   createPlaylist,
   deletePlaylistById,
@@ -83,6 +85,7 @@ const apis = {
   addNewComment,
   publishPlaylist,
   likeOrDislikePlaylist,
+  listenToList,
 };
 
 export default apis;

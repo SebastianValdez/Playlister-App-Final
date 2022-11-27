@@ -402,9 +402,9 @@ function GlobalStoreContextProvider(props) {
         return setStore({
           currentModal: CurrentModal.NONE,
           idNamePairs: store.idNamePairs,
-          playlistsArray: store.playlistsArray,
+          playlistsArray: payload.newLists,
           currentList: store.currentList,
-          selectedList: payload,
+          selectedList: payload.newList,
           currentSongIndex: -1,
           currentSong: store.currentSong,
           newListCounter: store.newListCounter,
@@ -687,7 +687,7 @@ function GlobalStoreContextProvider(props) {
   store.addNewComment = (user, comment) => {
     async function asyncAddComment(user, comment) {
       let newComment = { author: user, comment: comment };
-      let list = store.currentList;
+      let list = store.selectedList;
       list.comments.push(newComment);
 
       const response = await api.addNewComment(store.selectedList._id, list);
@@ -805,18 +805,35 @@ function GlobalStoreContextProvider(props) {
     asyncUpdateCurrentList(list);
   };
 
+  store.listenList = function (id) {
+    async function asyncListenList(id) {
+      const addListen = await api.listenToList(id);
+      if (addListen.data.success) {
+        let listArray = await store.getAllPlaylists();
+        storeReducer({
+          type: GlobalStoreActionType.LIKE_OR_DISLIKE_PLAYLIST,
+          payload: listArray,
+        });
+      }
+    }
+    asyncListenList(id);
+  };
+
   // ! Sets the clicked list, this is the list that we show video and comments for
   store.setClickedList = function (id) {
     async function asyncSetClickedList(id) {
-      const allLists = await api.getAllPlaylists();
-      if (allLists.data.success) {
-        const list = allLists.data.playlists.filter(
-          (list) => list._id === id
-        )[0];
-        storeReducer({
-          type: GlobalStoreActionType.SET_SELECTED_LIST,
-          payload: list,
-        });
+      const addListen = await api.listenToList(id);
+      if (addListen.data.success) {
+        const allLists = await api.getAllPlaylists();
+        if (allLists.data.success) {
+          const list = allLists.data.playlists.filter(
+            (list) => list._id === id
+          )[0];
+          storeReducer({
+            type: GlobalStoreActionType.SET_SELECTED_LIST,
+            payload: { newList: list, newLists: allLists.data.playlists },
+          });
+        }
       }
     }
     asyncSetClickedList(id);
@@ -837,9 +854,9 @@ function GlobalStoreContextProvider(props) {
         a.name.toLowerCase().localeCompare(b.name.toLowerCase())
       );
     } else if (store.sortType == "creation date") {
-      list.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     } else if (store.sortType == "update date") {
-      list.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+      list.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
     }
 
     // ! Use the published list for the fields that only relate to the published versions
@@ -852,11 +869,11 @@ function GlobalStoreContextProvider(props) {
           new Date(b.published.publishedDate)
       );
     } else if (store.sortType == "listens") {
-      list.sort((a, b) => a.listens - b.listens);
+      list.sort((a, b) => b.listens - a.listens);
     } else if (store.sortType == "likes") {
-      list.sort((a, b) => a.likes.length - b.likes.length);
+      list.sort((a, b) => b.likes.length - a.likes.length);
     } else if (store.sortType == "dislikes") {
-      list.sort((a, b) => a.dislikes.length - b.dislikes.length);
+      list.sort((a, b) => b.dislikes.length - a.dislikes.length);
     }
 
     return list;

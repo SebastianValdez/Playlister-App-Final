@@ -44,6 +44,10 @@ const HomeScreen = () => {
     listArray = store.searchWithFilter("/userLists", listArray);
   }
 
+  if (store && store.sortType !== "") {
+    listArray = store.sortLists(listArray);
+  }
+
   let listCard = "";
   if (store) {
     listCard = (

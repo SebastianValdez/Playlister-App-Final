@@ -303,6 +303,21 @@ likeOrDislikePlaylist = async (req, res) => {
   }
 };
 
+addListen = async (req, res) => {
+  let playlist = await Playlist.findById({ _id: req.params.id });
+  playist = await Playlist.findOneAndUpdate(
+    { _id: req.params.id },
+    { listens: playlist.listens + 1 },
+    (err, playlist) => {
+      if (err) {
+        return res.status(400).json({ success: false, error: err });
+      } else {
+        return res.status(200).json({ success: true, playlist: playlist });
+      }
+    }
+  );
+};
+
 module.exports = {
   createPlaylist,
   deletePlaylist,
@@ -313,4 +328,5 @@ module.exports = {
   addNewComment,
   publishPlaylist,
   likeOrDislikePlaylist,
+  addListen,
 };

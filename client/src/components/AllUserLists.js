@@ -40,12 +40,12 @@ const HomeScreen = () => {
     (list) => list.published.isPublished
   );
 
-  if (store && store.sortType !== "") {
-    listArray = store.sortLists(listArray);
-  }
-
   if (store && store.searchFilter !== "") {
     listArray = store.searchWithFilter("/allLists", listArray);
+  }
+
+  if (store && store.sortType !== "") {
+    listArray = store.sortLists(listArray);
   }
 
   let listCard = "";

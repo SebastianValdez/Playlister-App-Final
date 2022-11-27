@@ -29,4 +29,6 @@ router.put(
   PlaylistController.likeOrDislikePlaylist
 );
 
+router.put("/playlist/:id/addListen", PlaylistController.addListen);
+
 module.exports = router;

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalStoreContext } from "../store";
 import AuthContext from "../auth";
 import Box from "@mui/material/Box";
@@ -35,6 +35,14 @@ function ListCard(props) {
   const [expanded, setExpanded] = useState(false);
 
   const { list, selected } = props;
+
+  useEffect(() => {
+    if (store.currentList && store.currentList._id === list._id) {
+      setExpanded(true);
+    } else {
+      setExpanded(false);
+    }
+  });
 
   // ! Use this method to set current list, this will control what is displayed in the video and comments tab
   function handleLoadList(event, id) {
@@ -106,6 +114,7 @@ function ListCard(props) {
   function handlePublish(event) {
     event.stopPropagation();
     store.publishList();
+    setExpanded(false);
   }
 
   function handleDuplicate(event) {
@@ -174,7 +183,10 @@ function ListCard(props) {
           border: 3,
           borderRadius: 2,
           mt: 1,
-          backgroundColor: "beige",
+          backgroundColor:
+            store.selectedList && store.selectedList._id === list._id
+              ? "rgb(255, 204, 102)"
+              : "beige",
           flexDirection: "column",
         }}
         style={{ width: "100%" }}
@@ -333,7 +345,10 @@ function ListCard(props) {
           border: 3,
           borderRadius: 2,
           mt: 1,
-          backgroundColor: "beige",
+          backgroundColor:
+            store.selectedList && store.selectedList._id === list._id
+              ? "rgb(255, 204, 102)"
+              : "beige",
           flexDirection: "column",
         }}
         style={{ width: "100%", height: "650px" }}

@@ -25,8 +25,10 @@ export default function VideoPlayer() {
   if (store.selectedList) {
     list = store.selectedList;
     listName = list.name;
-    songTitle = list.songs[currentSong].title;
-    songArtist = list.songs[currentSong].artist;
+    if (list.songs[currentSong]) {
+      songTitle = list.songs[currentSong].title;
+      songArtist = list.songs[currentSong].artist;
+    }
   }
 
   if (store.selectedList) {
@@ -113,7 +115,10 @@ export default function VideoPlayer() {
             onPlayerReady(event);
             player = event;
           }}
-          onStateChange={onPlayerStateChange}
+          onStateChange={(event) => {
+            onPlayerStateChange(event);
+            player = event;
+          }}
         />
       </div>
 

@@ -14,6 +14,7 @@ import {
   WorkspaceScreen,
   AllUserLists,
   OneUserLists,
+  VideoPlayer,
 } from "./components";
 /*
     This is our application's top-level component.
