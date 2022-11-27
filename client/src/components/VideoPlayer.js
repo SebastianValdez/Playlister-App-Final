@@ -14,7 +14,6 @@ import Youtube from "react-youtube";
 export default function VideoPlayer() {
   const { store } = useContext(GlobalStoreContext);
 
-  let player = "";
   let playlist = [];
   let currentSong = 0;
 
@@ -113,11 +112,10 @@ export default function VideoPlayer() {
           }}
           onReady={(event) => {
             onPlayerReady(event);
-            player = event;
+            store.setPlayer(event);
           }}
           onStateChange={(event) => {
             onPlayerStateChange(event);
-            player = event;
           }}
         />
       </div>
@@ -143,18 +141,24 @@ export default function VideoPlayer() {
             onClick={() => {
               if (currentSong !== 0) {
                 decSong();
-                onPlayerReady(player);
+                onPlayerReady(store.player);
               }
             }}
           >
             <FastRewindIcon sx={{ fontSize: 50 }}></FastRewindIcon>
           </IconButton>
 
-          <IconButton style={{ color: "black" }} onClick={() => pause(player)}>
+          <IconButton
+            style={{ color: "black" }}
+            onClick={() => pause(store.player)}
+          >
             <StopIcon sx={{ fontSize: 50 }}></StopIcon>
           </IconButton>
 
-          <IconButton style={{ color: "black" }} onClick={() => play(player)}>
+          <IconButton
+            style={{ color: "black" }}
+            onClick={() => play(store.player)}
+          >
             <PlayArrowIcon sx={{ fontSize: 50 }}></PlayArrowIcon>
           </IconButton>
 
@@ -162,7 +166,7 @@ export default function VideoPlayer() {
             style={{ color: "black" }}
             onClick={() => {
               incSong();
-              onPlayerReady(player);
+              onPlayerReady(store.player);
             }}
           >
             <FastForwardIcon sx={{ fontSize: 50 }}></FastForwardIcon>
