@@ -40,6 +40,7 @@ export default function ControlBanner() {
   function handleKeyPress(event) {
     if (event.code === "Enter") {
       store.setSearchFilter(text);
+      setText("");
     }
   }
 
@@ -190,16 +191,21 @@ export default function ControlBanner() {
             </Box>
 
             {/* // ! SEARCH BAR */}
-            <TextField
-              id="filled-basic"
-              label={textFieldLabel}
-              variant="filled"
-              style={{ backgroundColor: "white" }}
-              sx={{ width: "700px" }}
-              onKeyPress={handleKeyPress}
-              onChange={handleUpdateText}
-            />
-
+            {location.pathname !== "/currentUserLists" ? (
+              <TextField
+                id="filled-basic"
+                label={textFieldLabel}
+                variant="filled"
+                defaultValue={text}
+                value={text}
+                style={{ backgroundColor: "white" }}
+                sx={{ width: "700px" }}
+                onKeyPress={handleKeyPress}
+                onChange={handleUpdateText}
+              />
+            ) : (
+              <Box></Box>
+            )}
             {/* // ! SORT MENU */}
             <Box
               sx={{

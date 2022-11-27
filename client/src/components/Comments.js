@@ -16,6 +16,7 @@ export default function Comments() {
   function handleKeyPress(event) {
     if (event.code === "Enter") {
       store.addNewComment(auth.user.username, text);
+      setText("");
     }
   }
 
@@ -51,15 +52,31 @@ export default function Comments() {
         </Box>
       </div>
       <div id="new-comments-container">
-        <TextField
-          id="filled-basic"
-          label="Add Comment"
-          variant="filled"
-          style={{ backgroundColor: "white" }}
-          sx={{ width: "100%" }}
-          onKeyPress={handleKeyPress}
-          onChange={handleUpdateText}
-        />
+        {store.selectedList ? (
+          <TextField
+            id="filled-basic"
+            label="Add Comment"
+            variant="filled"
+            defaultValue={text}
+            value={text}
+            style={{ backgroundColor: "white" }}
+            sx={{ width: "100%" }}
+            onKeyPress={handleKeyPress}
+            onChange={handleUpdateText}
+          />
+        ) : (
+          <Box
+            sx={{
+              height: "100%",
+              width: "100%",
+              textAlign: "center",
+              fontSize: "32px",
+            }}
+            style={{ backgroundColor: "grey" }}
+          >
+            No List Selected
+          </Box>
+        )}
       </div>
     </div>
   );

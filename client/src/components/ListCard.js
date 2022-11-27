@@ -63,7 +63,13 @@ function ListCard(props) {
 
   function handleClickList(event, id) {
     event.stopPropagation();
-    store.setClickedList(id);
+    if (store.selectedList) {
+      if (store.selectedList._id !== id) {
+        store.setClickedList(id);
+      }
+    } else {
+      store.setClickedList(id);
+    }
   }
 
   // ! Use this method to get the songs of a list, we will display these in the list card
@@ -125,7 +131,6 @@ function ListCard(props) {
   // ! Edit playlist name functions
   function handleToggleEdit(event) {
     event.stopPropagation();
-    event.stopPropagation();
     toggleEdit();
   }
 
@@ -147,8 +152,7 @@ function ListCard(props) {
   function handleKeyPress(event) {
     event.stopPropagation();
     if (event.code === "Enter") {
-      let id = event.target.id.substring("list-".length);
-      store.changeListName(id, text);
+      store.changeListName(list._id, text);
       toggleEdit();
     }
   }
@@ -170,7 +174,9 @@ function ListCard(props) {
 
   let cardElement = "";
 
-  // ! ##############################
+  // ! ##########################################################################################
+  // ! ##########################################################################################
+  // ! ##########################################################################################
   // ! WHEN THE LIST CARD IS COLLAPSED
   if (!expanded) {
     cardElement = (
@@ -193,6 +199,7 @@ function ListCard(props) {
         onClick={(event) => {
           handleClickList(event, list._id);
         }}
+        onDoubleClick={(event) => handleToggleEdit(event)}
       >
         {/* // ! THE TOP CONTAINER, HOLDS THE TITLE, AUTHOUR, AND LIKE AND DISLIKE */}
         <Box
@@ -213,7 +220,20 @@ function ListCard(props) {
             }}
             style={{ width: "100%" }}
           >
-            <Box sx={{ flexGrow: 1, fontSize: 28 }}>{list.name}</Box>
+            {!editActive ? (
+              <Box sx={{ flexGrow: 1, fontSize: 28 }}>{list.name}</Box>
+            ) : (
+              <TextField
+                id="outlined-basic"
+                label="Change Title"
+                variant="outlined"
+                defaultValue={list.name}
+                style={{ backgroundColor: "rgba(122,99,71,0.3)" }}
+                sx={{ width: "100%" }}
+                onKeyPress={handleKeyPress}
+                onChange={handleUpdateText}
+              ></TextField>
+            )}
             <Box>By: {list.ownerUsername} </Box>
           </Box>
 
@@ -601,26 +621,26 @@ function ListCard(props) {
     );
   }
 
-  if (editActive) {
-    cardElement = (
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id={"list-" + list._id}
-        label="Playlist Name"
-        name="name"
-        autoComplete="Playlist Name"
-        className="list-card"
-        onKeyPress={handleKeyPress}
-        onChange={handleUpdateText}
-        defaultValue={list.name}
-        inputProps={{ style: { fontSize: 48 } }}
-        InputLabelProps={{ style: { fontSize: 24 } }}
-        autoFocus
-      />
-    );
-  }
+  // if (editActive) {
+  //   cardElement = (
+  //     <TextField
+  //       margin="normal"
+  //       required
+  //       fullWidth
+  //       id={"list-" + list._id}
+  //       label="Playlist Name"
+  //       name="name"
+  //       autoComplete="Playlist Name"
+  //       className="list-card"
+  //       onKeyPress={handleKeyPress}
+  //       onChange={handleUpdateText}
+  //       defaultValue={list.name}
+  //       inputProps={{ style: { fontSize: 48 } }}
+  //       InputLabelProps={{ style: { fontSize: 24 } }}
+  //       autoFocus
+  //     />
+  //   );
+  // }
   return cardElement;
 }
 
