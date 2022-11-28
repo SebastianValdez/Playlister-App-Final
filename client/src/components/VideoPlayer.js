@@ -11,12 +11,13 @@ import { borderRadius } from "@mui/system";
 
 import Youtube from "react-youtube";
 
-export default function VideoPlayer() {
+export default function VideoPlayer(props) {
   const { store } = useContext(GlobalStoreContext);
   const [songTitle, setSongTitle] = useState("");
   const [songArtist, setSongArtist] = useState("");
   const [songNumber, setSongNumber] = useState(0);
 
+  const { videoOrNot } = props;
   let playlist = [];
   let currentSong = songNumber;
 
@@ -104,8 +105,11 @@ export default function VideoPlayer() {
     }
   }
 
+  let displayType = "";
+  if (!videoOrNot) displayType = "none";
+
   return (
-    <div id="video-player-container">
+    <div id="video-player-container" style={{ display: displayType }}>
       <div id="video-player">
         <Youtube
           videoId={playlist[currentSong]}

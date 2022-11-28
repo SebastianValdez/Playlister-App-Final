@@ -85,7 +85,8 @@ const HomeScreen = () => {
             Comments
           </Button>
         </div>
-        {videoOrComment === "video" ? <VideoPlayer /> : <Comments />}
+        {videoOrComment === "comment" ? <Comments /> : ""}
+        <VideoPlayer videoOrNot={videoOrComment === "video"} />
       </div>
     </div>
   );
