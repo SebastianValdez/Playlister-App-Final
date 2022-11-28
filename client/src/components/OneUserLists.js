@@ -42,6 +42,8 @@ const HomeScreen = () => {
 
   if (store && store.searchFilter !== "") {
     listArray = store.searchWithFilter("/userLists", listArray);
+  } else {
+    listArray = [];
   }
 
   if (store && store.sortType !== "") {

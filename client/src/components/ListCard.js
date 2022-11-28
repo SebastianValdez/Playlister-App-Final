@@ -55,9 +55,12 @@ function ListCard(props) {
 
       console.log("load " + event.target.id);
 
-      // CHANGE THE CURRENT LIST
-      store.setCurrentList(id);
-      console.log("HANO ", store.currentList);
+      if (auth.user.username === list.ownerUsername) {
+        // CHANGE THE CURRENT LIST
+        store.setCurrentList(id);
+      } else {
+        store.setCurrentListNoAuth(list);
+      }
     }
   }
 
@@ -120,7 +123,6 @@ function ListCard(props) {
   function handlePublish(event) {
     event.stopPropagation();
     store.publishList();
-    setExpanded(false);
   }
 
   function handleDuplicate(event) {
@@ -199,7 +201,10 @@ function ListCard(props) {
         onClick={(event) => {
           handleClickList(event, list._id);
         }}
-        onDoubleClick={(event) => handleToggleEdit(event)}
+        onDoubleClick={(event) => {
+          if (auth.user.username === list.ownerUsername)
+            handleToggleEdit(event);
+        }}
       >
         {/* // ! THE TOP CONTAINER, HOLDS THE TITLE, AUTHOUR, AND LIKE AND DISLIKE */}
         <Box
@@ -372,6 +377,13 @@ function ListCard(props) {
           flexDirection: "column",
         }}
         style={{ width: "100%", height: "650px" }}
+        onClick={(event) => {
+          handleClickList(event, list._id);
+        }}
+        onDoubleClick={(event) => {
+          if (auth.user.username === list.ownerUsername)
+            handleToggleEdit(event);
+        }}
       >
         {/* // ! THE TOP CONTAINER, HOLDS THE TITLE, AUTHOUR, AND LIKE AND DISLIKE */}
         <Box
@@ -391,7 +403,20 @@ function ListCard(props) {
             }}
             style={{ width: "100%" }}
           >
-            <Box sx={{ flexGrow: 1, fontSize: 28 }}>{list.name}</Box>
+            {!editActive ? (
+              <Box sx={{ flexGrow: 1, fontSize: 28 }}>{list.name}</Box>
+            ) : (
+              <TextField
+                id="outlined-basic"
+                label="Change Title"
+                variant="outlined"
+                defaultValue={list.name}
+                style={{ backgroundColor: "rgba(122,99,71,0.3)" }}
+                sx={{ width: "100%" }}
+                onKeyPress={handleKeyPress}
+                onChange={handleUpdateText}
+              ></TextField>
+            )}
             <Box>By: {list.ownerUsername} </Box>
           </Box>
 
@@ -512,18 +537,22 @@ function ListCard(props) {
               )}
 
               <Box>
-                <Button
-                  variant="contained"
-                  sx={{ mr: 2 }}
-                  style={{
-                    backgroundColor: "lightgrey",
-                    color: "black",
-                    fontWeight: "bold",
-                  }}
-                  onClick={(event) => handleDeleteList(event)}
-                >
-                  Delete
-                </Button>
+                {auth.user.username === list.ownerUsername ? (
+                  <Button
+                    variant="contained"
+                    sx={{ mr: 2 }}
+                    style={{
+                      backgroundColor: "lightgrey",
+                      color: "black",
+                      fontWeight: "bold",
+                    }}
+                    onClick={(event) => handleDeleteList(event)}
+                  >
+                    Delete
+                  </Button>
+                ) : (
+                  <Box></Box>
+                )}
 
                 {!list.published.isPublished ? (
                   <>
@@ -621,26 +650,6 @@ function ListCard(props) {
     );
   }
 
-  // if (editActive) {
-  //   cardElement = (
-  //     <TextField
-  //       margin="normal"
-  //       required
-  //       fullWidth
-  //       id={"list-" + list._id}
-  //       label="Playlist Name"
-  //       name="name"
-  //       autoComplete="Playlist Name"
-  //       className="list-card"
-  //       onKeyPress={handleKeyPress}
-  //       onChange={handleUpdateText}
-  //       defaultValue={list.name}
-  //       inputProps={{ style: { fontSize: 48 } }}
-  //       InputLabelProps={{ style: { fontSize: 24 } }}
-  //       autoFocus
-  //     />
-  //   );
-  // }
   return cardElement;
 }
 

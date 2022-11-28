@@ -206,7 +206,7 @@ function GlobalStoreContextProvider(props) {
           currentModal: CurrentModal.NONE,
           idNamePairs: store.idNamePairs,
           playlistsArray: store.playlistsArray,
-          currentList: payload,
+          currentList: store.currentList,
           selectedList: store.selectedList,
           currentSongIndex: -1,
           currentSong: null,
@@ -893,7 +893,7 @@ function GlobalStoreContextProvider(props) {
         a.name.toLowerCase().localeCompare(b.name.toLowerCase())
       );
     } else if (store.sortType == "creation date") {
-      list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      list.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
     } else if (store.sortType == "update date") {
       list.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
     }

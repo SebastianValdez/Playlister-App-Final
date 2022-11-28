@@ -52,7 +52,7 @@ export default function Comments() {
         </Box>
       </div>
       <div id="new-comments-container">
-        {store.selectedList ? (
+        {store.selectedList && auth.user !== "guest" ? (
           <TextField
             id="filled-basic"
             label="Add Comment"

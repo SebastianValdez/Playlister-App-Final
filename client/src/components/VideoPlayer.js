@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalStoreContext } from "../store";
 
 import Box from "@mui/material/Box";
@@ -13,21 +13,19 @@ import Youtube from "react-youtube";
 
 export default function VideoPlayer() {
   const { store } = useContext(GlobalStoreContext);
+  const [songTitle, setSongTitle] = useState("");
+  const [songArtist, setSongArtist] = useState("");
+  const [songNumber, setSongNumber] = useState(0);
 
   let playlist = [];
-  let currentSong = 0;
+  let currentSong = songNumber;
 
   let list = "";
   let listName = "";
-  let songTitle = "";
-  let songArtist = "";
+
   if (store.selectedList) {
     list = store.selectedList;
     listName = list.name;
-    if (list.songs[currentSong]) {
-      songTitle = list.songs[currentSong].title;
-      songArtist = list.songs[currentSong].artist;
-    }
   }
 
   if (store.selectedList) {
@@ -41,6 +39,14 @@ export default function VideoPlayer() {
     let song = playlist[currentSong];
     player.loadVideoById(song);
     player.playVideo();
+
+    if (store.selectedList) {
+      if (list.songs[currentSong]) {
+        setSongTitle(list.songs[currentSong].title);
+        setSongArtist(list.songs[currentSong].artist);
+        setSongNumber(currentSong);
+      }
+    }
   }
 
   // THIS FUNCTION INCREMENTS THE PLAYLIST SONG TO THE NEXT ONE
@@ -124,7 +130,7 @@ export default function VideoPlayer() {
 
       <div id="youtube-song-info">
         <span>Playlist: {listName} </span>
-        <span>Song #: {store.selectedList ? currentSong + 1 : ""} </span>
+        <span>Song #: {store.selectedList ? songNumber + 1 : ""} </span>
         <span>Title: {songTitle} </span>
         <span>Artist: {songArtist} </span>
       </div>

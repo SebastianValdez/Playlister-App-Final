@@ -66,10 +66,10 @@ export default function ControlBanner() {
         open={isMenuOpen}
         onClose={handleSortListsMenuClose}
       >
-        <MenuItem onClick={() => store.setSortType("name")}>
+        <MenuItem onClick={() => store.setSortType("creation date")}>
           By Creation Date (Old - New)
         </MenuItem>
-        <MenuItem onClick={() => store.setSortType("publish date")}>
+        <MenuItem onClick={() => store.setSortType("update date")}>
           By Last Edit Date (New - Old)
         </MenuItem>
         <MenuItem onClick={() => store.setSortType("name")}>
