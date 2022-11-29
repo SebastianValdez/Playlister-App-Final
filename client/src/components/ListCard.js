@@ -380,10 +380,6 @@ function ListCard(props) {
         onClick={(event) => {
           handleClickList(event, list._id);
         }}
-        onDoubleClick={(event) => {
-          if (auth.user.username === list.ownerUsername)
-            handleToggleEdit(event);
-        }}
       >
         {/* // ! THE TOP CONTAINER, HOLDS THE TITLE, AUTHOUR, AND LIKE AND DISLIKE */}
         <Box
@@ -403,20 +399,7 @@ function ListCard(props) {
             }}
             style={{ width: "100%" }}
           >
-            {!editActive ? (
-              <Box sx={{ flexGrow: 1, fontSize: 28 }}>{list.name}</Box>
-            ) : (
-              <TextField
-                id="outlined-basic"
-                label="Change Title"
-                variant="outlined"
-                defaultValue={list.name}
-                style={{ backgroundColor: "rgba(122,99,71,0.3)" }}
-                sx={{ width: "100%" }}
-                onKeyPress={handleKeyPress}
-                onChange={handleUpdateText}
-              ></TextField>
-            )}
+            <Box sx={{ flexGrow: 1, fontSize: 28 }}>{list.name}</Box>
             <Box>By: {list.ownerUsername} </Box>
           </Box>
 
@@ -473,6 +456,10 @@ function ListCard(props) {
               background: listBackground,
               border: "solid",
               borderRadius: "10px",
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+              event.preventDefault();
             }}
           >
             {songArray}

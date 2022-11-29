@@ -10,6 +10,7 @@ function SongCard(props) {
   const { song, index, published } = props;
 
   function handleDragStart(event) {
+    event.stopPropagation();
     event.dataTransfer.setData("song", index);
   }
 
@@ -37,9 +38,11 @@ function SongCard(props) {
     store.addMoveSongTransaction(sourceIndex, targetIndex);
   }
   function handleRemoveSong(event) {
+    event.stopPropagation();
     store.showRemoveSongModal(index, song);
   }
   function handleClick(event) {
+    event.stopPropagation();
     // DOUBLE CLICK IS FOR SONG EDITING
     if (event.detail === 2) {
       store.showEditSongModal(index, song);

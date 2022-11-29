@@ -152,6 +152,12 @@ export default function ControlBanner() {
                 <Link
                   style={{ textDecoration: "none", color: "white" }}
                   to="/currentUserLists"
+                  onClick={() => {
+                    store.removeClickedList();
+                    store.closeCurrentList();
+                    store.setSearchFilter("");
+                    store.setSortType(null);
+                  }}
                 >
                   <HomeOutlinedIcon sx={{ fontSize: 40 }}></HomeOutlinedIcon>
                 </Link>
@@ -167,6 +173,12 @@ export default function ControlBanner() {
                 <Link
                   style={{ textDecoration: "none", color: "white" }}
                   to="/userLists"
+                  onClick={() => {
+                    store.removeClickedList();
+                    store.closeCurrentList();
+                    store.setSearchFilter("");
+                    store.setSortType(null);
+                  }}
                 >
                   <PersonOutlineOutlinedIcon
                     sx={{ fontSize: 40 }}
@@ -184,6 +196,12 @@ export default function ControlBanner() {
                 <Link
                   style={{ textDecoration: "none", color: "white" }}
                   to="/allLists"
+                  onClick={() => {
+                    store.removeClickedList();
+                    store.closeCurrentList();
+                    store.setSearchFilter("");
+                    store.setSortType(null);
+                  }}
                 >
                   <GroupOutlinedIcon sx={{ fontSize: 40 }}></GroupOutlinedIcon>
                 </Link>

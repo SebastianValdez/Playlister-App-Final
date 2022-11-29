@@ -168,7 +168,7 @@ function GlobalStoreContextProvider(props) {
           currentModal: CurrentModal.DELETE_LIST,
           idNamePairs: store.idNamePairs,
           playlistsArray: store.playlistsArray,
-          currentList: null,
+          currentList: store.currentList,
           selectedList: store.selectedList,
           currentSongIndex: -1,
           currentSong: null,
@@ -279,7 +279,7 @@ function GlobalStoreContextProvider(props) {
           currentModal: CurrentModal.NONE,
           idNamePairs: store.idNamePairs,
           playlistsArray: store.playlistsArray,
-          currentList: null,
+          currentList: store.currentList,
           selectedList: store.selectedList,
           currentSongIndex: -1,
           currentSong: null,
@@ -333,7 +333,7 @@ function GlobalStoreContextProvider(props) {
           currentModal: CurrentModal.NONE,
           idNamePairs: store.idNamePairs,
           playlistsArray: payload,
-          currentList: store.currentList,
+          currentList: null,
           selectedList: store.selectedList,
           currentSongIndex: -1,
           currentSong: store.currentSong,
@@ -585,12 +585,11 @@ function GlobalStoreContextProvider(props) {
     async function processDelete(id) {
       let response = await api.deletePlaylistById(id);
       if (response.data.success) {
-        store.loadIdNamePairs();
-        history.push("/");
+        store.getAllPlaylists();
       }
     }
     processDelete(id);
-    store.loadIdNamePairs();
+    store.getAllPlaylists();
   };
 
   store.deleteMarkedList = function () {
@@ -874,8 +873,20 @@ function GlobalStoreContextProvider(props) {
           });
         }
       }
+      tps.clearAllTransactions();
     }
     asyncSetClickedList(id);
+  };
+
+  store.removeClickedList = function () {
+    storeReducer({
+      type: GlobalStoreActionType.SET_SELECTED_LIST,
+      payload: {
+        newList: null,
+        newLists: store.playlistsArray,
+      },
+    });
+    tps.clearAllTransactions();
   };
 
   // ! Change how we sort the lists
@@ -904,8 +915,8 @@ function GlobalStoreContextProvider(props) {
     if (store.sortType == "publish date") {
       list.sort(
         (a, b) =>
-          new Date(a.published.publishedDate) -
-          new Date(b.published.publishedDate)
+          new Date(b.published.publishedDate) -
+          new Date(a.published.publishedDate)
       );
     } else if (store.sortType == "listens") {
       list.sort((a, b) => b.listens - a.listens);

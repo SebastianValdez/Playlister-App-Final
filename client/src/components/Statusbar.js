@@ -36,7 +36,7 @@ function Statusbar() {
       </div>
     );
   } else if (location.pathname === "/userLists") {
-    text = store.searchFilter = "'s";
+    text = store.searchFilter + "'s";
   } else {
     text = store.searchFilter;
   }
