@@ -108,7 +108,7 @@ export default function VideoPlayer(props) {
             height: "350px",
             width: "100%",
             playerVars: {
-              autoplay: 0,
+              autoplay: 1,
             },
           }}
           onReady={(event) => {
@@ -128,7 +128,8 @@ export default function VideoPlayer(props) {
           Playlist: {store && store.selectedList ? store.selectedList.name : ""}
         </span>
         <span>
-          Song #: {store && store.selectedList ? [store.songIndex] : ""}
+          Song #:{" "}
+          {store && store.selectedList ? parseInt([store.songIndex]) + 1 : ""}
         </span>
         <span>
           Title:{" "}
