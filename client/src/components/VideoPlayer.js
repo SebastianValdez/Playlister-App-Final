@@ -13,13 +13,10 @@ import Youtube from "react-youtube";
 
 export default function VideoPlayer(props) {
   const { store } = useContext(GlobalStoreContext);
-  const [songTitle, setSongTitle] = useState("");
-  const [songArtist, setSongArtist] = useState("");
-  const [songNumber, setSongNumber] = useState(0);
 
   const { videoOrNot } = props;
   let playlist = [];
-  let currentSong = songNumber;
+  let currentSong = store.songIndex;
 
   let list = "";
   let listName = "";
@@ -40,26 +37,20 @@ export default function VideoPlayer(props) {
     let song = playlist[currentSong];
     player.loadVideoById(song);
     player.playVideo();
-
-    if (store.selectedList) {
-      if (list.songs[currentSong]) {
-        setSongTitle(list.songs[currentSong].title);
-        setSongArtist(list.songs[currentSong].artist);
-        setSongNumber(currentSong);
-      }
-    }
   }
 
   // THIS FUNCTION INCREMENTS THE PLAYLIST SONG TO THE NEXT ONE
   function incSong() {
     currentSong++;
     currentSong = currentSong % playlist.length;
+    store.setSongIndex(currentSong);
   }
 
   // THIS FUNCTION DECREMENTS THE PLAYLIST SONG TO THE PREVIOUS ONE
   function decSong() {
     currentSong--;
     currentSong = currentSong % playlist.length;
+    store.setSongIndex(currentSong);
   }
 
   function onPlayerReady(event) {
@@ -133,10 +124,30 @@ export default function VideoPlayer(props) {
       <div id="now-playing">Now Playing</div>
 
       <div id="youtube-song-info">
-        <span>Playlist: {listName} </span>
-        <span>Song #: {store.selectedList ? songNumber + 1 : ""} </span>
-        <span>Title: {songTitle} </span>
-        <span>Artist: {songArtist} </span>
+        <span>
+          Playlist: {store && store.selectedList ? store.selectedList.name : ""}
+        </span>
+        <span>
+          Song #: {store && store.selectedList ? [store.songIndex] : ""}
+        </span>
+        <span>
+          Title:{" "}
+          {store &&
+          store.selectedList &&
+          store.selectedList.songs &&
+          store.selectedList.songs[store.songIndex]
+            ? store.selectedList.songs[store.songIndex].title
+            : ""}
+        </span>
+        <span>
+          Artist:{" "}
+          {store &&
+          store.selectedList &&
+          store.selectedList.songs &&
+          store.selectedList.songs[store.songIndex]
+            ? store.selectedList.songs[store.songIndex].artist
+            : ""}
+        </span>
       </div>
       <div id="video-controls">
         <Box

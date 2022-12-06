@@ -213,9 +213,32 @@ registerUser = async (req, res) => {
   }
 };
 
+getUser = async (req, res) => {
+  let userId = auth.verifyUser(req);
+  if (!userId) {
+    return res.status(200).json({
+      loggedIn: false,
+      user: null,
+      errorMessage: "?",
+    });
+  }
+
+  const loggedInUser = await User.findOne({ _id: userId });
+
+  return res.status(200).json({
+    user: {
+      firstName: loggedInUser.firstName,
+      lastName: loggedInUser.lastName,
+      email: loggedInUser.email,
+      playlists: loggedInUser.playlists,
+    },
+  });
+};
+
 module.exports = {
   getLoggedIn,
   registerUser,
   loginUser,
   logoutUser,
+  getUser,
 };

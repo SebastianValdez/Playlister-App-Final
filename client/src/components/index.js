@@ -18,7 +18,7 @@ import AllUserLists from "./AllUserLists";
 import OneUserLists from "./OneUserLists";
 import Comments from "./Comments";
 import VideoPlayer from "./VideoPlayer";
-
+import MUIDuplicateNameModal from "./MUIDuplicateNameModal";
 /*
     This serves as a module so that we can import
     all the other components as we wish.
@@ -46,4 +46,5 @@ export {
   OneUserLists,
   Comments,
   VideoPlayer,
+  MUIDuplicateNameModal,
 };

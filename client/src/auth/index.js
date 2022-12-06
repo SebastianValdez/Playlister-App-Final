@@ -122,6 +122,13 @@ function AuthContextProvider(props) {
     }
   };
 
+  auth.getUser = async function () {
+    const response = await api.getUser();
+    if (response.status === 200) {
+      return response.data.user;
+    }
+  };
+
   auth.registerUser = async function (
     username,
     firstName,
@@ -167,6 +174,12 @@ function AuthContextProvider(props) {
       ) {
         auth.showRegisterErrorModal(
           "An account with this email address already exists."
+        );
+      } else if (
+        errorMessage === "An account with this username already exists."
+      ) {
+        auth.showRegisterErrorModal(
+          "An account with this username already exists."
         );
       }
     }

@@ -7,6 +7,7 @@ import ListCard from "./ListCard.js";
 import MUIDeleteModal from "./MUIDeleteModal";
 import MUIRemoveSongModal from "./MUIRemoveSongModal";
 import MUIEditSongModal from "./MUIEditSongModal";
+import MUIDuplicateNameModal from "./MUIDuplicateNameModal";
 import VideoPlayer from "./VideoPlayer";
 import Comments from "./Comments";
 
@@ -67,6 +68,8 @@ const HomeScreen = () => {
     modalJSX = <MUIRemoveSongModal />;
   } else if (store.isDeleteListModalOpen()) {
     modalJSX = <MUIDeleteModal />;
+  } else if (store.isDuplicateNameModalOpen()) {
+    modalJSX = <MUIDuplicateNameModal />;
   }
 
   if (auth.user === "guest") {
